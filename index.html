@@ -868,6 +868,17 @@
             return digitsOnly.length >= 8;
         }
 
+        function isPlaceholderPhoneNumber(phoneNumber) {
+            const normalizedPhone = normalizePhoneForTel(phoneNumber);
+            const digitsOnly = normalizedPhone.replace(/\D/g, '');
+
+            if (normalizedPhone === normalizePhoneForTel(DEFAULT_PHONE_NUMBER)) {
+                return true;
+            }
+
+            return /^(\d)\1+$/.test(digitsOnly);
+        }
+
         function openCallModal() {
             updatePhoneNumber(getSavedPhoneNumber());
             setPhoneError('');
@@ -901,7 +912,7 @@
                 return;
             }
 
-            if (normalizePhoneForTel(phoneNumber) === normalizePhoneForTel(DEFAULT_PHONE_NUMBER)) {
+            if (isPlaceholderPhoneNumber(phoneNumber)) {
                 setPhoneError("Remplacez d'abord le numéro d'exemple par le vrai numéro à contacter.");
                 phoneInput.focus();
                 return;
