@@ -229,6 +229,61 @@ body {
     margin-right: 0.5rem;
 }
 
+/* ==================== DESTINATION COUNTERS ==================== */
+.destination-counters {
+    margin-top: 2.5rem;
+    width: 100%;
+}
+
+.counters-title {
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.counters-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 0.8rem 1rem;
+    min-width: 85px;
+    transition: all 0.3s ease;
+}
+
+.counter-item:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+    border-color: var(--accent-gold);
+}
+
+.counter-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.counter-label {
+    font-size: 0.65rem;
+    color: var(--text-gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: center;
+}
+
 /* ==================== BOOKING SECTION ==================== */
 .booking-section {
     background-color: var(--primary-dark);
@@ -1283,6 +1338,31 @@ body {
             <p class="description">Book a taxi for your guests</p>
             <p class="features">Fast • Reliable • Premium Service</p>
             <button class="btn-primary" onclick="scrollToBooking()"><i class="fas fa-plus"></i> NEW BOOKING</button>
+            <div class="destination-counters">
+                <p class="counters-title"><i class="fas fa-chart-bar"></i> Courses par destination</p>
+                <div class="counters-grid">
+                    <div class="counter-item">
+                        <span class="counter-number" id="count-cdg">0</span>
+                        <span class="counter-label">CDG</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" id="count-orly">0</span>
+                        <span class="counter-label">Orly</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" id="count-beauvais">0</span>
+                        <span class="counter-label">Beauvais</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" id="count-lyon">0</span>
+                        <span class="counter-label">Gare de Lyon</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" id="count-nord">0</span>
+                        <span class="counter-label">Gare du Nord</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1704,7 +1784,27 @@ function saveBooking() {
     bookings.push(booking);
     lastBooking = booking;
     localStorage.setItem('bookings', JSON.stringify(bookings));
+    updateDestinationCounters();
     return booking;
+}
+
+// ==================== DESTINATION COUNTERS ====================
+function updateDestinationCounters() {
+    const destinations = ['cdg', 'orly', 'beauvais', 'lyon', 'nord'];
+    const counts = {};
+    destinations.forEach(function(d) { counts[d] = 0; });
+
+    bookings.forEach(function(booking) {
+        const dest = (booking.destination || '').toLowerCase().trim();
+        if (Object.prototype.hasOwnProperty.call(counts, dest)) {
+            counts[dest]++;
+        }
+    });
+
+    destinations.forEach(function(dest) {
+        const el = document.getElementById('count-' + dest);
+        if (el) el.textContent = counts[dest];
+    });
 }
 
 function deleteBooking(bookingId) {
@@ -1724,6 +1824,7 @@ function deleteAllBookings() {
 }
 
 function loadBookings() {
+    updateDestinationCounters();
     const bookingsList = document.getElementById('bookingsList');
     const deleteAllSection = document.getElementById('deleteAllSection');
     
