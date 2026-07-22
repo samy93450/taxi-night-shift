@@ -1730,6 +1730,7 @@ body {
 
     document.addEventListener('DOMContentLoaded', function() {
         setMinDate();
+        bindBookingFormListeners();
         syncHistoryPersistenceControls();
         if (historyPersistenceEnabled) {
             persistBookings();
@@ -1876,7 +1877,7 @@ function updateHistoryPersistenceStatus() {
     if (statusElement) {
         statusElement.textContent = historyPersistenceEnabled
             ? 'Historique local activé : vos réservations seront restaurées à la prochaine ouverture.'
-            : 'Historique local désactivé : les réservations restent visibles jusqu’au prochain rechargement.';
+            : 'Historique local désactivé : les réservations restent visibles uniquement pendant cette session.';
     }
 
     updateNextBookingNumber();
@@ -1884,6 +1885,19 @@ function updateHistoryPersistenceStatus() {
 
 function syncHistoryPersistenceControls() {
     updateHistoryPersistenceStatus();
+}
+
+function bindBookingFormListeners() {
+    document.querySelectorAll('#booking input, #booking textarea, #booking select').forEach(function(field) {
+        field.addEventListener('input', markBookingAsDirty);
+        field.addEventListener('change', markBookingAsDirty);
+    });
+}
+
+function markBookingAsDirty() {
+    if (currentStep < 5) {
+        lastBooking = null;
+    }
 }
 
 function toggleHistoryPersistence() {
