@@ -748,7 +748,7 @@
                             <div>
                                 <p>Contactez-nous</p>
                                 <!-- Numéro d'exemple à remplacer avant un usage réel -->
-                                <div class="contact-number" id="displayPhone">01 23 45 67 89</div>
+                                <div class="contact-number" id="displayPhone"></div>
                                 <div class="contact-note">Numéro de téléphone modifiable avant chaque appel.</div>
                             </div>
                             <button type="button" data-call-trigger>Modifier / appeler</button>
@@ -802,7 +802,7 @@
             <h4 id="modalTitle">Numéro d'appel</h4>
             <p>À chaque utilisation de l'icône appel, vous pouvez modifier le numéro de téléphone avant de lancer l'appel depuis l'iPhone. Le numéro affiché par défaut est un exemple à remplacer.</p>
             <label class="input-label" for="phoneInput">Numéro de téléphone</label>
-            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89" pattern="[+]?[0-9 ]{8,}" title="Utilisez au moins 8 chiffres, avec des espaces et éventuellement un +." aria-describedby="phoneHelp phoneError">
+            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89" title="Utilisez au moins 8 chiffres, avec des espaces et éventuellement un +." aria-describedby="phoneHelp phoneError">
             <div class="input-help" id="phoneHelp">Exemple modifiable : 01 23 45 67 89</div>
             <p class="input-error" id="phoneError" aria-live="polite"></p>
             <div class="modal-actions">
@@ -837,6 +837,15 @@
             return phoneNumber.replace(/[^\d+]/g, '');
         }
 
+        function isValidPhoneNumber(phoneNumber) {
+            if (!/^\+?[0-9 ]+$/.test(phoneNumber)) {
+                return false;
+            }
+
+            const digitsOnly = phoneNumber.replace(/\D/g, '');
+            return digitsOnly.length >= 8;
+        }
+
         function openCallModal() {
             updatePhoneNumber(getSavedPhoneNumber());
             setPhoneError('');
@@ -864,7 +873,7 @@
                 return;
             }
 
-            if (!phoneInput.checkValidity()) {
+            if (!isValidPhoneNumber(phoneNumber)) {
                 setPhoneError('Veuillez saisir un numéro de téléphone valide.');
                 phoneInput.focus();
                 return;
