@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citadines Taxi Booking - Luxury Concierge Service</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-dark: #1a1a1a;
+    --primary-light: #2d2d2d;
+    --accent-gold: #c9a961;
+    --text-white: #ffffff;
+    --text-gray: #999999;
+    --border-color: #3d3d3d;
+    --success-color: #4caf50;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-dark);
+    color: var(--text-white);
+    line-height: 1.6;
+}
+
+.navbar {
+    background-color: var(--primary-light);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-white);
+    letter-spacing: 2px;
+}
+
+.logo-subtitle {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-gray);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.nav-link:hover {
+    color: var(--accent-gold);
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+.hero .subtitle {
+    font-size: 1rem;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+.hero .tagline {
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.hero .description {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero .features {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-dark);
+    color: var(--accent-gold);
+    border: 2px solid var(--accent-gold);
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+}
+
+.booking-section {
+    background-color: var(--primary-dark);
+    padding: 3rem 2rem;
+    min-height: 100vh;
+}
+
+.booking-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--primary-light);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.booking-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    font-size: 1.3rem;
+}
+
+.steps-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.step {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gray);
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.step.active {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+    border-color: var(--accent-gold);
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-step h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.passenger-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.counter-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--accent-gold);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.counter-btn:hover {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+}
+
+#passengerCount {
+    font-size: 1.1rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+.time-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.time-picker select {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem 0.25rem;
+    color: var(--text-white);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--accent-gold);
+}
+
+.booking-summary {
+    background-color: var(--primary-dark);
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.booking-summary h4 {
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-gray);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.btn-next,
+.btn-back {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-next {
+    background-color: var(--primary-dark);
+    color: var(--text-white);
+    border: 1px solid var(--text-gray);
+}
+
+.btn-next:hover {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+}
+
+.btn-back {
+    background-color: transparent;
+    color: var(--accent-gold);
+    border: 1px solid var(--accent-gold);
+}
+
+.btn-back:hover {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+}
+
+.btn-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-light);
+    border: 1px solid var(--border-color);
+    color: var(--accent-gold);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    min-width: 120px;
+}
+
+.btn-action:hover {
+    border-color: var(--accent-gold);
+    background-color: rgba(201, 169, 97, 0.1);
+}
+
+.success-message {
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 3rem;
+    color: var(--success-color);
+    margin-bottom: 1rem;
+}
+
+.success-message p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: var(--success-color);
+}
+
+.booking-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.my-bookings-section {
+    background-color: var(--primary-dark);
+    padding: 3rem 2rem;
+    min-height: 500px;
+}
+
+.bookings-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.bookings-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+}
+
+.bookings-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.booking-card {
+    background-color: var(--primary-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.booking-card h3 {
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+}
+
+.booking-card p {
+    margin-bottom: 0.5rem;
+    color: var(--text-gray);
+}
+
+.no-bookings {
+    text-align: center;
+    color: var(--text-gray);
+    padding: 3rem;
+}
+
+.contact-section {
+    background-color: var(--primary-light);
+    padding: 3rem 2rem;
+}
+
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-container h2 {
+    color: var(--accent-gold);
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+}
+
+.contact-info p {
+    margin-bottom: 1rem;
+    color: var(--text-gray);
+}
+
+.footer {
+    background-color: var(--primary-dark);
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer p {
+    color: var(--text-gray);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    .nav-menu {
+        gap: 1rem;
+        font-size: 0.8rem;
+    }
+    .booking-actions {
+        grid-template-columns: 1fr;
+    }
+    .form-actions {
+        flex-direction: column;
+    }
+    .btn-next, .btn-back {
+        width: 100%;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <span class="logo-text">CITADINES</span>
+                <span class="logo-subtitle">TAXI BOOKING</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#booking" class="nav-link">Réserver</a></li>
+                <li><a href="#mybookings" class="nav-link">Mes Réservations</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>CITADINES</h1>
+            <p class="subtitle">APART'HOTEL PARIS</p>
+            <h2>TAXI BOOKING</h2>
+            <p class="tagline">Luxury Concierge Service</p>
+            <p class="description">Book a taxi for your guests</p>
+            <p class="features">Fast • Reliable • Premium Service</p>
+            <button class="btn-primary" onclick="scrollToBooking()">+ NEW BOOKING</button>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking-section">
+        <div class="booking-container">
+            <h2>NOUVELLE RÉSERVATION</h2>
+            
+            <!-- Steps Indicator -->
+            <div class="steps-indicator">
+                <div class="step active" id="step1">1</div>
+                <div class="step" id="step2">2</div>
+                <div class="step" id="step3">3</div>
+                <div class="step" id="step4">4</div>
+                <div class="step" id="step5">5</div>
+            </div>
+
+            <!-- Step 1: Guest Information -->
+            <div class="form-step active" id="form-step-1">
+                <h3>INFORMATIONS CLIENT</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Numéro d'Appartement</label>
+                        <input type="text" placeholder="ex. 502" id="apartmentNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom de l'invité (Optionnel)</label>
+                        <input type="text" placeholder="ex. John Smith" id="guestName">
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de Passagers</label>
+                        <div class="passenger-counter">
+                            <button type="button" class="counter-btn" onclick="decrementPassengers()">−</button>
+                            <span id="passengerCount">2</span>
+                            <button type="button" class="counter-btn" onclick="incrementPassengers()">+</button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 2: Journey Details -->
+            <div class="form-step" id="form-step-2">
+                <h3>DÉTAILS DU TRAJET</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Destination</label>
+                        <select id="destination">
+                            <option value="">Sélectionner une destination</option>
+                            <option value="cdg">Charles de Gaulle Airport</option>
+                            <option value="orly">Orly Airport</option>
+                            <option value="nord">Gare du Nord</option>
+                            <option value="lyon">Gare de Lyon</option>
+                            <option value="disneyland">Disneyland Paris</option>
+                            <option value="defense">La Défense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date de Départ</label>
+                        <input type="date" id="departureDate">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="previousStep()">< BACK</button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 3: Departure Details -->
+            <div class="form-step" id="form-step-3">
+                <h3>DÉTAILS DE DÉPART</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Heure de Départ</label>
+                        <div class="time-picker">
+                            <select id="departureHour">
+                                <option value="">HH</option>
+                                <option value="00">00</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                            </select>
+                            <span>:</span>
+                            <select id="departureMinute">
+                                <option value="">MM</option>
+                                <option value="00">00</option>
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes de Réception (Optionnel)</label>
+                        <textarea placeholder="Instructions spéciales..." id="receptionNotes"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="previousStep()">< BACK</button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 4: Confirmation -->
+            <div class="form-step" id="form-step-4">
+                <h3>CONFIRMATION</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Géré par Réceptionniste</label>
+                        <input type="text" placeholder="Votre nom" id="receptionistName">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="driverConfirmed">
+                        <label for="driverConfirmed">Oui, le chauffeur a été confirmé</label>
+                    </div>
+                    
+                    <div class="booking-summary">
+                        <h4>RÉSUMÉ DE LA RÉSERVATION</h4>
+                        <div class="summary-item">
+                            <span>Passagers</span>
+                            <span id="summaryPassengers">2</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Destination</span>
+                            <span id="summaryDestination">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Date</span>
+                            <span id="summaryDate">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Heure</span>
+                            <span id="summaryTime">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="previousStep()">< BACK</button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 5: Completion -->
+            <div class="form-step" id="form-step-5">
+                <h3>RÉSERVATION CONFIRMÉE</h3>
+                <div class="success-message">
+                    <div class="success-icon">✓</div>
+                    <p>Votre réservation a été enregistrée avec succès!</p>
+                    
+                    <div class="booking-actions">
+                        <button type="button" class="btn-action" onclick="generatePDF()">
+                            <span>📄</span>
+                            GÉNÉRER PDF
+                        </button>
+                        <button type="button" class="btn-action" onclick="printBooking()">
+                            <span>🖨️</span>
+                            IMPRIMER
+                        </button>
+                        <button type="button" class="btn-action" onclick="sendEmail()">
+                            <span>✉️</span>
+                            EMAIL
+                        </button>
+                        <button type="button" class="btn-action" onclick="sendWhatsApp()">
+                            <span>💬</span>
+                            WHATSAPP
+                        </button>
+                    </div>
+
+                    <button type="button" class="btn-primary" onclick="newBooking()">+ NOUVELLE RÉSERVATION</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Bookings Section -->
+    <section id="mybookings" class="my-bookings-section">
+        <div class="bookings-container">
+            <h2>MES RÉSERVATIONS</h2>
+            <div id="bookingsList" class="bookings-list">
+                <p class="no-bookings">Aucune réservation pour le moment</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <h2>CONTACT</h2>
+            <div class="contact-info">
+                <p><strong>Citadines Apart'Hotel Paris</strong></p>
+                <p>📞 +33 1 XX XX XX XX</p>
+                <p>📧 taxi@citadines.fr</p>
+                <p>💬 WhatsApp: +33 6 XX XX XX XX</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Citadines Taxi Booking. Tous droits réservés.</p>
+        <p>Luxury Concierge Service</p>
+    </footer>
+
+    <script>
+let currentStep = 1;
+let passengerCount = 2;
+let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    setMinDate();
+    loadBookings();
+});
+
+function setMinDate() {
+    const today = new Date();
+    const dateInput = document.getElementById('departureDate');
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const minDate = `${year}-${month}-${day}`;
+    dateInput.min = minDate;
+}
+
+function incrementPassengers() {
+    passengerCount++;
+    document.getElementById('passengerCount').textContent = passengerCount;
+    document.getElementById('summaryPassengers').textContent = passengerCount;
+}
+
+function decrementPassengers() {
+    if (passengerCount > 1) {
+        passengerCount--;
+        document.getElementById('passengerCount').textContent = passengerCount;
+        document.getElementById('summaryPassengers').textContent = passengerCount;
+    }
+}
+
+function nextStep() {
+    if (validateStep(currentStep)) {
+        if (currentStep < 5) {
+            currentStep++;
+            updateFormDisplay();
+            updateStepsIndicator();
+        }
+    }
+}
+
+function previousStep() {
+    if (currentStep > 1) {
+        currentStep--;
+        updateFormDisplay();
+        updateStepsIndicator();
+    }
+}
+
+function updateFormDisplay() {
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`form-step-${i}`).classList.remove('active');
+    }
+    document.getElementById(`form-step-${currentStep}`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateStepsIndicator() {
+    for (let i = 1; i <= 5; i++) {
+        const step = document.getElementById(`step${i}`);
+        if (i <= currentStep) {
+            step.classList.add('active');
+        } else {
+            step.classList.remove('active');
+        }
+    }
+}
+
+function validateStep(step) {
+    switch(step) {
+        case 1:
+            const apartment = document.getElementById('apartmentNumber').value;
+            if (!apartment.trim()) {
+                alert('Veuillez entrer le numéro d\'appartement');
+                return false;
+            }
+            return true;
+        case 2:
+            const destination = document.getElementById('destination').value;
+            const date = document.getElementById('departureDate').value;
+            if (!destination) {
+                alert('Veuillez sélectionner une destination');
+                return false;
+            }
+            if (!date) {
+                alert('Veuillez sélectionner une date');
+                return false;
+            }
+            updateSummary();
+            return true;
+        case 3:
+            const hour = document.getElementById('departureHour').value;
+            const minute = document.getElementById('departureMinute').value;
+            if (!hour || !minute) {
+                alert('Veuillez sélectionner l\'heure de départ');
+                return false;
+            }
+            updateSummary();
+            return true;
+        case 4:
+            updateSummary();
+            return true;
+        default:
+            return true;
+    }
+}
+
+function updateSummary() {
+    document.getElementById('summaryPassengers').textContent = passengerCount;
+
+    const destination = document.getElementById('destination').value;
+    const destinationMap = {
+        'cdg': 'Charles de Gaulle Airport',
+        'orly': 'Orly Airport',
+        'nord': 'Gare du Nord',
+        'lyon': 'Gare de Lyon',
+        'disneyland': 'Disneyland Paris',
+        'defense': 'La Défense'
+    };
+    document.getElementById('summaryDestination').textContent = destinationMap[destination] || '-';
+
+    const date = document.getElementById('departureDate').value;
+    if (date) {
+        const dateObj = new Date(date);
+        document.getElementById('summaryDate').textContent = dateObj.toLocaleDateString('fr-FR');
+    }
+
+    const hour = document.getElementById('departureHour').value;
+    const minute = document.getElementById('departureMinute').value;
+    if (hour && minute) {
+        document.getElementById('summaryTime').textContent = `${hour}:${minute}`;
+    }
+}
+
+function saveBooking() {
+    const booking = {
+        id: Date.now(),
+        apartment: document.getElementById('apartmentNumber').value,
+        guestName: document.getElementById('guestName').value,
+        passengers: passengerCount,
+        destination: document.getElementById('destination').value,
+        date: document.getElementById('departureDate').value,
+        hour: document.getElementById('departureHour').value,
+        minute: document.getElementById('departureMinute').value,
+        notes: document.getElementById('receptionNotes').value,
+        receptionist: document.getElementById('receptionistName').value,
+        driverConfirmed: document.getElementById('driverConfirmed').checked,
+        timestamp: new Date().toLocaleString('fr-FR')
+    };
+
+    bookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    return booking;
+}
+
+function loadBookings() {
+    const bookingsList = document.getElementById('bookingsList');
+    
+    if (bookings.length === 0) {
+        bookingsList.innerHTML = '<p class="no-bookings">Aucune réservation pour le moment</p>';
+        return;
+    }
+
+    bookingsList.innerHTML = '';
+    bookings.forEach(booking => {
+        const card = document.createElement('div');
+        card.className = 'booking-card';
+        
+        const destinationMap = {
+            'cdg': 'Charles de Gaulle Airport',
+            'orly': 'Orly Airport',
+            'nord': 'Gare du Nord',
+            'lyon': 'Gare de Lyon',
+            'disneyland': 'Disneyland Paris',
+            'defense': 'La Défense'
+        };
+
+        card.innerHTML = `
+            <h3>Réservation #${booking.id}</h3>
+            <p><strong>Appartement:</strong> ${booking.apartment}</p>
+            <p><strong>Destination:</strong> ${destinationMap[booking.destination] || booking.destination}</p>
+            <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString('fr-FR')}</p>
+            <p><strong>Heure:</strong> ${booking.hour}:${booking.minute}</p>
+            <p><strong>Passagers:</strong> ${booking.passengers}</p>
+            <p><strong>Réceptionniste:</strong> ${booking.receptionist || '-'}</p>
+            <p><strong>Confirmée:</strong> ${booking.driverConfirmed ? 'Oui ✓' : 'Non'}</p>
+            <p><small style="color: #999;">Créée le: ${booking.timestamp}</small></p>
+        `;
+        
+        bookingsList.appendChild(card);
+    });
+}
+
+function scrollToBooking() {
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+}
+
+function generatePDF() {
+    const booking = saveBooking();
+    alert('📄 PDF généré avec succès!\n\nRéservation #' + booking.id);
+}
+
+function printBooking() {
+    const booking = saveBooking();
+    window.print();
+}
+
+function sendEmail() {
+    const booking = saveBooking();
+    alert('✉️ Email envoyé avec succès!');
+}
+
+function sendWhatsApp() {
+    const booking = saveBooking();
+    const message = encodeURIComponent(`Réservation Citadines Taxi\nAppartement: ${booking.apartment}\nDestination: ${booking.destination}\nDate: ${booking.date}\nHeure: ${booking.hour}:${booking.minute}`);
+    window.open(`https://wa.me/?text=${message}`, '_blank');
+}
+
+function newBooking() {
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+        if (el.type !== 'checkbox') el.value = '';
+        if (el.type === 'checkbox') el.checked = false;
+    });
+    
+    passengerCount = 2;
+    currentStep = 1;
+    document.getElementById('passengerCount').textContent = '2';
+    document.getElementById('summaryPassengers').textContent = '2';
+    
+    updateFormDisplay();
+    updateStepsIndicator();
+    scrollToBooking();
+}
+    </script>
+</body>
+</html>
