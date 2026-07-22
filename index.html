@@ -1792,7 +1792,7 @@ function parseStoredBookings(rawValue) {
             return booking && typeof booking === 'object';
         }) : [];
     } catch (error) {
-        console.warn('Historique local invalide, restauration ignorée.', error);
+        console.warn('Historique local invalide, restauration ignorée. L\'historique sera réinitialisé.', error);
         return [];
     }
 }
@@ -1878,7 +1878,7 @@ function updateHistoryPersistenceStatus() {
     if (statusElement) {
         statusElement.textContent = historyPersistenceEnabled
             ? 'Historique local activé : vos réservations seront restaurées à la prochaine ouverture.'
-            : 'Historique local désactivé : les réservations restent visibles uniquement pendant cette session.';
+            : 'Historique local désactivé : les réservations affichées restent disponibles dans cette session, mais elles ne seront plus sauvegardées après rechargement.';
     }
 
     updateNextBookingNumber();
@@ -2110,7 +2110,7 @@ function deleteAllBookings() {
 }
 
 function resetBookingCounter() {
-    if (!confirm('Réinitialiser le compteur de réservation ? Les prochaines réservations repartiront de #1.')) {
+    if (!confirm('Réinitialiser le compteur de réservation ? Les prochaines réservations repartiront de #1. Attention : les réservations existantes conserveront leurs numéros actuels.')) {
         return;
     }
 
