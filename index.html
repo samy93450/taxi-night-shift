@@ -821,7 +821,7 @@
             <h4 id="modalTitle">Numéro d'appel</h4>
             <p>À chaque utilisation de l'icône appel, vous pouvez modifier le numéro de téléphone avant de lancer l'appel depuis l'iPhone. Le numéro affiché par défaut est un exemple à remplacer.</p>
             <label class="input-label" for="phoneInput">Numéro de téléphone</label>
-            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89" title="Utilisez au moins 8 chiffres, avec des espaces et éventuellement un +." aria-describedby="phoneHelp phoneError">
+            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89" title="Utilisez au moins 8 chiffres, avec des espaces, des tirets, des parenthèses et éventuellement un +." aria-describedby="phoneHelp phoneError">
             <div class="input-help" id="phoneHelp">Exemple modifiable : 01 23 45 67 89 — remplacez-le avant mise en service.</div>
             <p class="input-error" id="phoneError" aria-live="polite"></p>
             <div class="modal-actions">
@@ -833,7 +833,8 @@
 
     <script>
         const STORAGE_KEY = 'fireSafetyPhoneNumber';
-        // Numéro d'exemple à remplacer par le contact réel de votre service.
+        // Numéro d'exemple au format français (01 XX XX XX XX) à remplacer par le contact réel
+        // de votre service avant tout déploiement ou usage réel.
         const DEFAULT_PHONE_NUMBER = '01 23 45 67 89';
         const displayPhone = document.getElementById('displayPhone');
         const defaultNumberWarning = document.getElementById('defaultNumberWarning');
@@ -859,7 +860,7 @@
         }
 
         function isValidPhoneNumber(phoneNumber) {
-            if (!/^\+?[0-9 ]+$/.test(phoneNumber)) {
+            if (!/^\+?[0-9 ()-]+$/.test(phoneNumber)) {
                 return false;
             }
 
@@ -900,7 +901,7 @@
                 return;
             }
 
-            if (phoneNumber === DEFAULT_PHONE_NUMBER) {
+            if (normalizePhoneForTel(phoneNumber) === normalizePhoneForTel(DEFAULT_PHONE_NUMBER)) {
                 setPhoneError("Remplacez d'abord le numéro d'exemple par le vrai numéro à contacter.");
                 phoneInput.focus();
                 return;
