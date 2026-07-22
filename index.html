@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Sécurité Incendie - Application Web</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
             --bg: #070707;
@@ -38,7 +34,7 @@
 
         body {
             min-height: 100vh;
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: var(--white);
             background:
                 radial-gradient(circle at top left, rgba(201, 23, 18, 0.22), transparent 28%),
@@ -59,6 +55,13 @@
             background: none;
             color: inherit;
             cursor: pointer;
+        }
+
+        .symbol {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
 
         .app-shell {
@@ -178,7 +181,7 @@
             gap: 14px;
         }
 
-        .browser-banner i {
+        .browser-banner .symbol {
             color: var(--gold);
             font-size: 1.75rem;
         }
@@ -383,7 +386,7 @@
             text-align: center;
         }
 
-        .service-item i {
+        .service-item .symbol {
             width: 58px;
             height: 58px;
             margin: 0 auto 12px;
@@ -475,7 +478,7 @@
             padding: 10px 6px;
         }
 
-        .benefit i {
+        .benefit .symbol {
             font-size: 2rem;
             color: var(--gold);
             margin-bottom: 10px;
@@ -656,7 +659,7 @@
             <section class="hero">
                 <div class="crest" aria-hidden="true">
                     <div class="crest-inner">
-                        <i class="fa-solid fa-fire-flame-curved"></i>
+                        <span class="symbol" aria-hidden="true">🔥</span>
                     </div>
                 </div>
                 <div class="divider"></div>
@@ -665,7 +668,7 @@
                 <p class="tagline">Prévenir • Protéger • Sauver</p>
 
                 <div class="browser-banner">
-                    <i class="fa-solid fa-globe"></i>
+                    <span class="symbol" aria-hidden="true">🌐</span>
                     <div>
                         <strong>Application web</strong>
                         <span>Accessible depuis votre navigateur sur iPhone</span>
@@ -676,19 +679,19 @@
                     <div class="phone-screen">
                         <div class="status-bar">
                             <span>9:41</span>
-                            <span><i class="fa-solid fa-signal"></i> <i class="fa-solid fa-wifi"></i> <i class="fa-solid fa-battery-three-quarters"></i></span>
+                            <span aria-hidden="true">📶 Wi‑Fi 🔋</span>
                         </div>
 
                         <div class="app-header">
                             <div class="brand">
-                                <div class="brand-badge"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div class="brand-badge"><span class="symbol" aria-hidden="true">🛡️</span></div>
                                 <div>
                                     <strong>Sécurité Incendie</strong>
                                     <span>Mode urgence mobile</span>
                                 </div>
                             </div>
                             <button class="menu-button" type="button" aria-label="Ouvrir l'appel d'urgence" data-call-trigger>
-                                <i class="fa-solid fa-bars"></i>
+                                <span class="symbol" aria-hidden="true">☰</span>
                             </button>
                         </div>
 
@@ -696,11 +699,11 @@
                             <h3>Appel d'urgence</h3>
                             <p>En cas d'incendie</p>
                             <div class="fire-icon" aria-hidden="true">
-                                <i class="fa-solid fa-fire-flame-curved"></i>
+                                <span class="symbol" aria-hidden="true">🔥</span>
                             </div>
                             <p class="emergency-text">Appuyez sur le bouton pour modifier si besoin le numéro fixe puis lancer l'appel immédiatement.</p>
                             <button class="call-trigger" type="button" aria-label="Modifier le numéro puis appeler" data-call-trigger>
-                                <i class="fa-solid fa-phone-volume"></i>
+                                <span class="symbol" aria-hidden="true">📞</span>
                                 <span>Modifier le numéro puis appeler</span>
                             </button>
                             <div class="call-caption">Appuyez ici</div>
@@ -709,25 +712,25 @@
                         <h3 class="section-title">Services disponibles</h3>
                         <div class="service-grid">
                             <article class="service-item">
-                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="symbol" aria-hidden="true">📍</span>
                                 <strong>Localisation automatique</strong>
                             </article>
                             <article class="service-item">
-                                <i class="fa-solid fa-bell"></i>
+                                <span class="symbol" aria-hidden="true">🔔</span>
                                 <strong>Alerte immédiate</strong>
                             </article>
                             <article class="service-item">
-                                <i class="fa-solid fa-phone"></i>
+                                <span class="symbol" aria-hidden="true">📞</span>
                                 <strong>Mise en relation directe</strong>
                             </article>
                             <article class="service-item">
-                                <i class="fa-solid fa-clipboard-check"></i>
+                                <span class="symbol" aria-hidden="true">☑️</span>
                                 <strong>Conforme aux normes</strong>
                             </article>
                         </div>
 
                         <section class="contact-card" aria-label="Numéro de contact">
-                            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="contact-icon"><span class="symbol" aria-hidden="true">📞</span></div>
                             <div>
                                 <p>Contactez-nous</p>
                                 <div class="contact-number" id="displayPhone">01 23 45 67 89</div>
@@ -742,23 +745,23 @@
             <section class="benefits">
                 <div class="benefits-grid">
                     <article class="benefit">
-                        <i class="fa-solid fa-shield"></i>
+                        <span class="symbol" aria-hidden="true">🛡️</span>
                         <strong>Protection 24/7</strong>
                     </article>
                     <article class="benefit">
-                        <i class="fa-solid fa-fire"></i>
+                        <span class="symbol" aria-hidden="true">🔥</span>
                         <strong>Détection rapide</strong>
                     </article>
                     <article class="benefit">
-                        <i class="fa-solid fa-bell"></i>
+                        <span class="symbol" aria-hidden="true">🔔</span>
                         <strong>Alerte immédiate</strong>
                     </article>
                     <article class="benefit">
-                        <i class="fa-solid fa-user-helmet-safety"></i>
+                        <span class="symbol" aria-hidden="true">👨‍🚒</span>
                         <strong>Intervention rapide</strong>
                     </article>
                     <article class="benefit">
-                        <i class="fa-solid fa-clipboard-check"></i>
+                        <span class="symbol" aria-hidden="true">☑️</span>
                         <strong>Conforme aux normes</strong>
                     </article>
                 </div>
@@ -769,11 +772,11 @@
 
         <div class="quick-actions">
             <button class="action-button" type="button" data-call-trigger>
-                <i class="fa-solid fa-pen"></i>
+                <span class="symbol" aria-hidden="true">✏️</span>
                 Modifier le numéro
             </button>
             <button class="action-button primary" type="button" data-call-trigger>
-                <i class="fa-solid fa-phone-volume"></i>
+                <span class="symbol" aria-hidden="true">📞</span>
                 Appeler
             </button>
         </div>
