@@ -1,5 +1,7 @@
 # Sécurité Incendie - Application Web
 
+> ⚠️ Le numéro affiché par défaut est un exemple. Il doit être remplacé par le vrai numéro à contacter avant toute mise en production ou utilisation réelle.
+
 Application web responsive pensée pour un écran d'iPhone avec un accès rapide à un appel d'urgence.
 
 ## Fonctionnalités

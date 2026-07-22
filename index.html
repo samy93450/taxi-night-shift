@@ -197,6 +197,21 @@
             font-size: 0.95rem;
         }
 
+        .warning-banner {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 123, 112, 0.35);
+            background: rgba(115, 18, 16, 0.28);
+            color: #ffd0ca;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .warning-banner.hidden {
+            display: none;
+        }
+
         .phone-frame {
             margin: 28px auto 24px;
             width: min(100%, 360px);
@@ -690,6 +705,10 @@
                     </div>
                 </div>
 
+                <div class="warning-banner hidden" id="defaultNumberWarning" role="status" aria-live="polite">
+                    ⚠️ Le numéro affiché est un exemple. Remplacez-le avant toute utilisation réelle.
+                </div>
+
                 <div class="phone-frame" aria-label="Aperçu iPhone de l'application">
                     <div class="phone-screen">
                         <div class="status-bar">
@@ -803,7 +822,7 @@
             <p>À chaque utilisation de l'icône appel, vous pouvez modifier le numéro de téléphone avant de lancer l'appel depuis l'iPhone. Le numéro affiché par défaut est un exemple à remplacer.</p>
             <label class="input-label" for="phoneInput">Numéro de téléphone</label>
             <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89" title="Utilisez au moins 8 chiffres, avec des espaces et éventuellement un +." aria-describedby="phoneHelp phoneError">
-            <div class="input-help" id="phoneHelp">Exemple modifiable : 01 23 45 67 89</div>
+            <div class="input-help" id="phoneHelp">Exemple modifiable : 01 23 45 67 89 — remplacez-le avant mise en service.</div>
             <p class="input-error" id="phoneError" aria-live="polite"></p>
             <div class="modal-actions">
                 <button class="btn-secondary" type="button" id="cancelCallEdit">Annuler</button>
@@ -817,6 +836,7 @@
         // Numéro d'exemple à remplacer par le contact réel de votre service.
         const DEFAULT_PHONE_NUMBER = '01 23 45 67 89';
         const displayPhone = document.getElementById('displayPhone');
+        const defaultNumberWarning = document.getElementById('defaultNumberWarning');
         const callModal = document.getElementById('callModal');
         const phoneInput = document.getElementById('phoneInput');
         const phoneError = document.getElementById('phoneError');
@@ -831,6 +851,7 @@
         function updatePhoneNumber(phoneNumber) {
             displayPhone.textContent = phoneNumber;
             phoneInput.value = phoneNumber;
+            defaultNumberWarning.classList.toggle('hidden', phoneNumber !== DEFAULT_PHONE_NUMBER);
         }
 
         function normalizePhoneForTel(phoneNumber) {
@@ -879,6 +900,12 @@
                 return;
             }
 
+            if (phoneNumber === DEFAULT_PHONE_NUMBER) {
+                setPhoneError("Remplacez d'abord le numéro d'exemple par le vrai numéro à contacter.");
+                phoneInput.focus();
+                return;
+            }
+
             setPhoneError('');
             localStorage.setItem(STORAGE_KEY, phoneNumber);
             updatePhoneNumber(phoneNumber);
@@ -908,7 +935,8 @@
                 closeCallModal();
             }
 
-            if (event.key === 'Enter' && document.activeElement === phoneInput && callModal.classList.contains('open')) {
+            if (event.key === 'Enter' && callModal.classList.contains('open') && document.activeElement === phoneInput) {
+                event.preventDefault();
                 saveAndLaunchCall();
             }
         });
