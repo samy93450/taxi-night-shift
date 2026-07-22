@@ -11,7 +11,8 @@ Application web luxe pour la gestion des réservations de taxi pour l'hôtel Cit
 ## Fonctionnalités
 
 - ✅ Nouvelle Réservation (formulaire multi-étapes)
-- ✅ Mes Réservations (historique local)
+- ✅ Mes Réservations (historique local optionnel)
+- ✅ Réinitialisation du compteur de réservation
 - ✅ Génération PDF
 - ✅ Impressions
 - ✅ Partage Email & WhatsApp

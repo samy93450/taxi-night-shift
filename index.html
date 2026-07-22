@@ -723,6 +723,61 @@ body {
     text-transform: uppercase;
 }
 
+.bookings-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    background-color: var(--primary-light);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.booking-counter-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.booking-counter-label {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.booking-counter-value {
+    color: var(--accent-gold);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.booking-helper-text {
+    color: var(--text-light-gray);
+    font-size: 0.8rem;
+    max-width: 360px;
+}
+
+.bookings-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.bookings-actions .checkbox-group {
+    margin-bottom: 0;
+    padding: 0.7rem 1rem;
+}
+
+.btn-reset-counter {
+    min-height: 52px;
+    justify-content: center;
+}
+
 .bookings-list {
     display: grid;
     gap: 1.5rem;
@@ -944,6 +999,11 @@ body {
 .footer p:first-child {
     margin-bottom: 0.3rem;
     font-weight: 600;
+}
+
+.footer-credit {
+    letter-spacing: 1px;
+    opacity: 0.85;
 }
 
 /* ==================== RESPONSIVE - TABLET ==================== */
@@ -1203,6 +1263,26 @@ body {
     .bookings-container h2 {
         font-size: 1.1rem;
         margin-bottom: 1.5rem;
+    }
+
+    .bookings-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+    }
+
+    .booking-helper-text {
+        max-width: none;
+    }
+
+    .bookings-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .bookings-actions .checkbox-group,
+    .btn-reset-counter {
+        width: 100%;
     }
 
     .booking-card {
@@ -1595,6 +1675,20 @@ body {
     <section id="mybookings" class="my-bookings-section">
         <div class="bookings-container">
             <h2><i class="fas fa-history"></i> MES RÉSERVATIONS</h2>
+            <div class="bookings-toolbar">
+                <div class="booking-counter-panel">
+                    <span class="booking-counter-label">Prochaine réservation</span>
+                    <span class="booking-counter-value" id="nextBookingNumber">#1</span>
+                    <p class="booking-helper-text" id="historyPersistenceStatus">Historique local activé.</p>
+                </div>
+                <div class="bookings-actions">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="persistHistoryToggle" onchange="toggleHistoryPersistence()">
+                        <label for="persistHistoryToggle">Sauvegarder l'historique en local</label>
+                    </div>
+                    <button type="button" class="btn-back btn-reset-counter" onclick="resetBookingCounter()"><i class="fas fa-rotate-left"></i> RÉINITIALISER LE COMPTEUR</button>
+                </div>
+            </div>
             <div id="bookingsList" class="bookings-list">
                 <p class="no-bookings"><i class="fas fa-inbox"></i> Aucune réservation pour le moment</p>
             </div>
@@ -1608,6 +1702,7 @@ body {
     <footer class="footer">
         <p>&copy; 2024 Citadines Taxi Booking. Tous droits réservés.</p>
         <p>Luxury Concierge Service</p>
+        <p class="footer-credit">Designed by ASM</p>
     </footer>
 
     <!-- PDF Modal -->
@@ -1619,17 +1714,30 @@ body {
     </div>
 
     <script>
-let currentStep = 1;
-let passengerCount = 2;
-let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-let lastBooking = null;
+    const STORAGE_KEYS = {
+        bookings: 'citadinesTaxi.bookings',
+        legacyBookings: 'bookings',
+        bookingCounter: 'citadinesTaxi.bookingCounter',
+        historyEnabled: 'citadinesTaxi.historyEnabled'
+    };
 
-document.addEventListener('DOMContentLoaded', function() {
-    setMinDate();
-    loadBookings();
-});
+    let currentStep = 1;
+    let passengerCount = 2;
+    let historyPersistenceEnabled = getStoredBoolean(STORAGE_KEYS.historyEnabled, true);
+    let bookings = historyPersistenceEnabled ? normalizeBookings(getStoredBookings()) : [];
+    let bookingCounter = getInitialBookingCounter(bookings);
+    let lastBooking = null;
 
-function setMinDate() {
+    document.addEventListener('DOMContentLoaded', function() {
+        setMinDate();
+        syncHistoryPersistenceControls();
+        if (historyPersistenceEnabled) {
+            persistBookings();
+        }
+        loadBookings();
+    });
+
+    function setMinDate() {
     const today = new Date();
     const dateInput = document.getElementById('departureDate');
     const year = today.getFullYear();
@@ -1637,6 +1745,159 @@ function setMinDate() {
     const day = String(today.getDate()).padStart(2, '0');
     const minDate = `${year}-${month}-${day}`;
     dateInput.min = minDate;
+}
+
+function getStorageItem(key) {
+    try {
+        return window.localStorage.getItem(key);
+    } catch (error) {
+        console.warn('LocalStorage indisponible pour la clé:', key, error);
+        return null;
+    }
+}
+
+function setStorageItem(key, value) {
+    try {
+        window.localStorage.setItem(key, value);
+    } catch (error) {
+        console.warn('Impossible de sauvegarder dans localStorage pour la clé:', key, error);
+    }
+}
+
+function removeStorageItem(key) {
+    try {
+        window.localStorage.removeItem(key);
+    } catch (error) {
+        console.warn('Impossible de supprimer la clé localStorage:', key, error);
+    }
+}
+
+function getStoredBoolean(key, fallbackValue) {
+    const storedValue = getStorageItem(key);
+    if (storedValue === 'true') return true;
+    if (storedValue === 'false') return false;
+    return fallbackValue;
+}
+
+function parseStoredBookings(rawValue) {
+    if (!rawValue) {
+        return [];
+    }
+
+    try {
+        const parsedValue = JSON.parse(rawValue);
+        return Array.isArray(parsedValue) ? parsedValue.filter(function(booking) {
+            return booking && typeof booking === 'object';
+        }) : [];
+    } catch (error) {
+        console.warn('Historique local invalide, restauration ignorée.', error);
+        return [];
+    }
+}
+
+function getStoredBookings() {
+    const namespacedBookings = parseStoredBookings(getStorageItem(STORAGE_KEYS.bookings));
+    if (namespacedBookings.length > 0) {
+        return namespacedBookings;
+    }
+
+    return parseStoredBookings(getStorageItem(STORAGE_KEYS.legacyBookings));
+}
+
+function normalizeBookings(storedBookings) {
+    let nextNumber = 1;
+
+    return storedBookings.map(function(booking) {
+        const normalizedBooking = Object.assign({}, booking);
+        const parsedBookingNumber = Number.parseInt(normalizedBooking.bookingNumber, 10);
+
+        if (Number.isInteger(parsedBookingNumber) && parsedBookingNumber > 0) {
+            normalizedBooking.bookingNumber = parsedBookingNumber;
+            nextNumber = Math.max(nextNumber, parsedBookingNumber + 1);
+        } else {
+            normalizedBooking.bookingNumber = nextNumber;
+            nextNumber++;
+        }
+
+        return normalizedBooking;
+    });
+}
+
+function getInitialBookingCounter(existingBookings) {
+    const storedCounter = Number.parseInt(getStorageItem(STORAGE_KEYS.bookingCounter), 10);
+    const derivedCounter = existingBookings.reduce(function(maxCounter, booking) {
+        const bookingNumber = Number.parseInt(booking.bookingNumber, 10);
+        return Number.isInteger(bookingNumber) ? Math.max(maxCounter, bookingNumber) : maxCounter;
+    }, 0) + 1;
+
+    if (Number.isInteger(storedCounter) && storedCounter > 0) {
+        return Math.max(storedCounter, derivedCounter);
+    }
+
+    return derivedCounter;
+}
+
+function persistBookings() {
+    if (!historyPersistenceEnabled) {
+        return;
+    }
+
+    setStorageItem(STORAGE_KEYS.bookings, JSON.stringify(bookings));
+    setStorageItem(STORAGE_KEYS.bookingCounter, String(bookingCounter));
+    removeStorageItem(STORAGE_KEYS.legacyBookings);
+}
+
+function clearPersistedBookings() {
+    removeStorageItem(STORAGE_KEYS.bookings);
+    removeStorageItem(STORAGE_KEYS.legacyBookings);
+    removeStorageItem(STORAGE_KEYS.bookingCounter);
+}
+
+function getBookingDisplayId(booking) {
+    const bookingNumber = Number.parseInt(booking.bookingNumber, 10);
+    return Number.isInteger(bookingNumber) && bookingNumber > 0 ? bookingNumber : booking.id;
+}
+
+function updateNextBookingNumber() {
+    const nextBookingElement = document.getElementById('nextBookingNumber');
+    if (nextBookingElement) {
+        nextBookingElement.textContent = `#${bookingCounter}`;
+    }
+}
+
+function updateHistoryPersistenceStatus() {
+    const statusElement = document.getElementById('historyPersistenceStatus');
+    const toggleElement = document.getElementById('persistHistoryToggle');
+
+    if (toggleElement) {
+        toggleElement.checked = historyPersistenceEnabled;
+    }
+
+    if (statusElement) {
+        statusElement.textContent = historyPersistenceEnabled
+            ? 'Historique local activé : vos réservations seront restaurées à la prochaine ouverture.'
+            : 'Historique local désactivé : les réservations restent visibles jusqu’au prochain rechargement.';
+    }
+
+    updateNextBookingNumber();
+}
+
+function syncHistoryPersistenceControls() {
+    updateHistoryPersistenceStatus();
+}
+
+function toggleHistoryPersistence() {
+    const toggleElement = document.getElementById('persistHistoryToggle');
+    historyPersistenceEnabled = !!(toggleElement && toggleElement.checked);
+    setStorageItem(STORAGE_KEYS.historyEnabled, historyPersistenceEnabled ? 'true' : 'false');
+
+    if (historyPersistenceEnabled) {
+        persistBookings();
+    } else {
+        clearPersistedBookings();
+    }
+
+    updateHistoryPersistenceStatus();
 }
 
 function incrementPassengers() {
@@ -1664,6 +1925,10 @@ function updateDestinations() {
 
 function nextStep() {
     if (validateStep(currentStep)) {
+        if (currentStep === 4) {
+            saveBooking();
+        }
+
         if (currentStep < 5) {
             currentStep++;
             updateFormDisplay();
@@ -1766,8 +2031,13 @@ function updateSummary() {
 }
 
 function saveBooking() {
+    if (lastBooking) {
+        return lastBooking;
+    }
+
     const booking = {
         id: Date.now(),
+        bookingNumber: bookingCounter,
         apartment: document.getElementById('apartmentNumber').value,
         guestName: document.getElementById('guestName').value,
         passengers: passengerCount,
@@ -1782,9 +2052,10 @@ function saveBooking() {
     };
 
     bookings.push(booking);
+    bookingCounter++;
     lastBooking = booking;
-    localStorage.setItem('bookings', JSON.stringify(bookings));
-    updateDestinationCounters();
+    persistBookings();
+    loadBookings();
     return booking;
 }
 
@@ -1810,7 +2081,7 @@ function updateDestinationCounters() {
 function deleteBooking(bookingId) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')) {
         bookings = bookings.filter(b => b.id !== bookingId);
-        localStorage.setItem('bookings', JSON.stringify(bookings));
+        persistBookings();
         loadBookings();
     }
 }
@@ -1818,13 +2089,24 @@ function deleteBooking(bookingId) {
 function deleteAllBookings() {
     if (confirm('Êtes-vous sûr de vouloir supprimer TOUTES les réservations ? Cette action est irréversible.')) {
         bookings = [];
-        localStorage.setItem('bookings', JSON.stringify(bookings));
+        persistBookings();
         loadBookings();
     }
 }
 
+function resetBookingCounter() {
+    if (!confirm('Réinitialiser le compteur de réservation ? Les prochaines réservations repartiront de #1.')) {
+        return;
+    }
+
+    bookingCounter = 1;
+    persistBookings();
+    updateNextBookingNumber();
+}
+
 function loadBookings() {
     updateDestinationCounters();
+    updateHistoryPersistenceStatus();
     const bookingsList = document.getElementById('bookingsList');
     const deleteAllSection = document.getElementById('deleteAllSection');
     
@@ -1852,7 +2134,7 @@ function loadBookings() {
 
         card.innerHTML = `
             <div class="booking-card-header">
-                <h3><i class="fas fa-ticket-alt"></i> Réservation #${booking.id}</h3>
+                <h3><i class="fas fa-ticket-alt"></i> Réservation #${getBookingDisplayId(booking)}</h3>
                 <button type="button" class="btn-delete" onclick="deleteBooking(${booking.id})"><i class="fas fa-trash"></i> Supprimer</button>
             </div>
             <p><strong><i class="fas fa-door-open"></i> Appartement:</strong> ${booking.apartment}</p>
@@ -1891,7 +2173,7 @@ function generatePDFHTML(booking) {
             <h2>BOOKING DETAILS</h2>
             <div class="pdf-row">
                 <span class="pdf-label">Booking ID:</span>
-                <span class="pdf-value">#${booking.id}</span>
+                <span class="pdf-value">#${getBookingDisplayId(booking)}</span>
             </div>
             <div class="pdf-row">
                 <span class="pdf-label">Date Created:</span>
@@ -1982,7 +2264,7 @@ function downloadPDF() {
     
     const opt = {
         margin: 10,
-        filename: `Citadines_Booking_${lastBooking.id}.pdf`,
+        filename: `Citadines_Booking_${getBookingDisplayId(lastBooking)}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
@@ -2002,14 +2284,11 @@ function printBooking() {
         return;
     }
 
-    saveBooking();
-    loadBookings();
     window.print();
 }
 
 function sendWhatsApp() {
     const booking = saveBooking();
-    loadBookings();
     
     const destinationMap = {
         'cdg': 'Charles de Gaulle Airport',
@@ -2022,7 +2301,7 @@ function sendWhatsApp() {
 
     const message = encodeURIComponent(
         `CITADINES TAXI BOOKING CONFIRMATION\n\n` +
-        `📋 Booking ID: #${booking.id}\n` +
+        `📋 Booking ID: #${getBookingDisplayId(booking)}\n` +
         `👤 Guest Name: ${booking.guestName || 'Not specified'}\n` +
         `🚪 Apartment: ${booking.apartment}\n` +
         `👥 Passengers: ${booking.passengers}\n` +
@@ -2041,13 +2320,14 @@ function scrollToBooking() {
 }
 
 function newBooking() {
-    document.querySelectorAll('input, textarea, select').forEach(el => {
+    document.querySelectorAll('#booking input, #booking textarea, #booking select').forEach(el => {
         if (el.type !== 'checkbox') el.value = '';
         if (el.type === 'checkbox') el.checked = false;
     });
     
     passengerCount = 2;
     currentStep = 1;
+    lastBooking = null;
     document.getElementById('passengerCount').textContent = '2';
     document.getElementById('summaryPassengers').textContent = '2';
     
