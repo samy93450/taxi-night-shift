@@ -690,8 +690,8 @@
                                     <span>Mode urgence mobile</span>
                                 </div>
                             </div>
-                            <button class="menu-button" type="button" aria-label="Ouvrir l'appel d'urgence" data-call-trigger>
-                                <span class="symbol" aria-hidden="true">☰</span>
+                            <button class="menu-button" type="button" aria-label="Ouvrir la fenêtre d'appel" data-call-trigger>
+                                <span class="symbol" aria-hidden="true">📞</span>
                             </button>
                         </div>
 
@@ -701,10 +701,9 @@
                             <div class="fire-icon" aria-hidden="true">
                                 <span class="symbol" aria-hidden="true">🔥</span>
                             </div>
-                            <p class="emergency-text">Appuyez sur le bouton pour modifier si besoin le numéro fixe puis lancer l'appel immédiatement.</p>
+                            <p class="emergency-text">Appuyez sur le bouton pour modifier si besoin le numéro de téléphone puis lancer l'appel immédiatement.</p>
                             <button class="call-trigger" type="button" aria-label="Modifier le numéro puis appeler" data-call-trigger>
                                 <span class="symbol" aria-hidden="true">📞</span>
-                                <span>Modifier le numéro puis appeler</span>
                             </button>
                             <div class="call-caption">Appuyez ici</div>
                         </section>
@@ -734,7 +733,7 @@
                             <div>
                                 <p>Contactez-nous</p>
                                 <div class="contact-number" id="displayPhone">01 23 45 67 89</div>
-                                <div class="contact-note">Numéro fixe modifiable avant chaque appel.</div>
+                                <div class="contact-note">Numéro de téléphone modifiable avant chaque appel.</div>
                             </div>
                             <button type="button" data-call-trigger>Modifier / appeler</button>
                         </section>
@@ -785,9 +784,9 @@
     <div class="modal" id="callModal" aria-hidden="true">
         <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <h4 id="modalTitle">Numéro d'appel</h4>
-            <p>À chaque utilisation de l'icône appel, vous pouvez modifier le numéro fixe avant de lancer l'appel depuis l'iPhone.</p>
+            <p>À chaque utilisation de l'icône appel, vous pouvez modifier le numéro de téléphone avant de lancer l'appel depuis l'iPhone. Le numéro affiché par défaut est un exemple à remplacer.</p>
             <label class="input-label" for="phoneInput">Numéro de téléphone</label>
-            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89">
+            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89" pattern="[0-9+ ]{2,}" title="Utilisez des chiffres, des espaces et éventuellement un +.">
             <div class="modal-actions">
                 <button class="btn-secondary" type="button" id="cancelCallEdit">Annuler</button>
                 <button class="btn-primary-modal" type="button" id="saveAndCall">Enregistrer et appeler</button>
@@ -834,7 +833,13 @@
             const phoneNumber = phoneInput.value.trim();
 
             if (!phoneNumber) {
-                alert('Veuillez saisir un numéro fixe avant d\'appeler.');
+                alert('Veuillez saisir un numéro de téléphone avant d\'appeler.');
+                phoneInput.focus();
+                return;
+            }
+
+            if (!phoneInput.checkValidity()) {
+                alert('Veuillez saisir un numéro de téléphone valide.');
                 phoneInput.focus();
                 return;
             }
