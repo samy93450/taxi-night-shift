@@ -2,1966 +2,870 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citadines Taxi Booking - Luxury Concierge Service</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sécurité Incendie - Application Web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary-dark: #0f0f0f;
-    --primary-light: #1a1a1a;
-    --accent-gold: #d4af37;
-    --accent-gold-light: #e8d4a0;
-    --text-white: #ffffff;
-    --text-gray: #b0b0b0;
-    --text-light-gray: #808080;
-    --border-color: #2d2d2d;
-    --success-color: #4caf50;
-    --danger-color: #ff6b6b;
-    --card-bg: #252525;
-}
-
-body {
-    font-family: 'Times New Roman', 'Georgia', serif;
-    background-color: var(--primary-dark);
-    color: var(--text-white);
-    line-height: 1.6;
-}
-
-/* ==================== NAVBAR ==================== */
-.navbar {
-    background-color: var(--primary-light);
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 2px solid var(--accent-gold);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.navbar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.logo-text {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--text-white);
-    letter-spacing: 3px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.logo-subtitle {
-    font-size: 0.7rem;
-    color: var(--accent-gold);
-    letter-spacing: 2px;
-    margin-top: 2px;
-    font-weight: 600;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2.5rem;
-}
-
-.nav-link {
-    color: var(--text-gray);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    font-weight: 500;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: var(--accent-gold);
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--accent-gold);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-/* ==================== HERO SECTION ==================== */
-.hero {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
-    padding: 5rem 2rem;
-    text-align: center;
-    min-height: 700px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.hero-content {
-    max-width: 600px;
-    position: relative;
-    z-index: 1;
-}
-
-.hero-icon {
-    font-size: 4rem;
-    color: var(--accent-gold);
-    margin-bottom: 1.5rem;
-    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-}
-
-.hero h1 {
-    font-size: 4rem;
-    letter-spacing: 4px;
-    margin-bottom: 0.3rem;
-    font-weight: 300;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.hero .subtitle {
-    font-size: 0.9rem;
-    color: var(--accent-gold);
-    letter-spacing: 3px;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-.hero .divider {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-    margin: 1rem auto;
-}
-
-.hero h2 {
-    font-size: 2.8rem;
-    letter-spacing: 3px;
-    margin-bottom: 1rem;
-    font-weight: 400;
-}
-
-.hero .tagline {
-    font-size: 1.1rem;
-    color: var(--accent-gold);
-    letter-spacing: 2px;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-    font-weight: 300;
-}
-
-.hero .description {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-white);
-}
-
-.hero .features {
-    color: var(--text-gray);
-    font-size: 0.85rem;
-    margin-bottom: 2.5rem;
-    letter-spacing: 2px;
-    font-weight: 500;
-}
-
-.btn-primary {
-    background-color: var(--primary-dark);
-    color: var(--accent-gold);
-    border: 2px solid var(--accent-gold);
-    padding: 1.1rem 2.5rem;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 0;
-    font-weight: 600;
-    text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-gold);
-    color: var(--primary-dark);
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-    transform: translateY(-2px);
-}
-
-.btn-primary i {
-    margin-right: 0.5rem;
-}
-
-/* ==================== BOOKING SECTION ==================== */
-.booking-section {
-    background-color: var(--primary-dark);
-    padding: 4rem 2rem;
-    min-height: 100vh;
-}
-
-.booking-container {
-    max-width: 700px;
-    margin: 0 auto;
-    background-color: var(--primary-light);
-    padding: 3rem;
-    border-radius: 0;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-}
-
-.booking-container h2 {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    color: var(--accent-gold);
-    letter-spacing: 2px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-/* Steps Indicator */
-.steps-indicator {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2.5rem;
-}
-
-.step {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: var(--card-bg);
-    border: 2px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-light-gray);
-    font-weight: bold;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-}
-
-.step.active {
-    background-color: var(--accent-gold);
-    color: var(--primary-dark);
-    border-color: var(--accent-gold);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-}
-
-/* Form Steps */
-.form-step {
-    display: none;
-}
-
-.form-step.active {
-    display: block;
-    animation: slideIn 0.4s ease;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.form-step h3 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--accent-gold);
-    letter-spacing: 2px;
-    font-size: 1rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    text-transform: uppercase;
-}
-
-.form-step h3 i {
-    font-size: 1.3rem;
-    color: var(--accent-gold);
-}
-
-/* Form Groups */
-.form-group {
-    margin-bottom: 1.8rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.6rem;
-    color: var(--text-white);
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.9rem;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-white);
-    border-radius: 0;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: var(--text-light-gray);
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent-gold);
-    background-color: rgba(212, 175, 55, 0.05);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-/* Passenger Counter */
-.passenger-counter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 0.8rem;
-    border-radius: 0;
-}
-
-.counter-btn {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--accent-gold);
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    border-radius: 0;
-    font-size: 1.3rem;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.counter-btn:hover {
-    background-color: var(--accent-gold);
-    color: var(--primary-dark);
-    border-color: var(--accent-gold);
-}
-
-#passengerCount {
-    font-size: 1.2rem;
-    min-width: 40px;
-    text-align: center;
-    color: var(--accent-gold);
-    font-weight: 600;
-}
-
-/* Destinations Section */
-.destinations-section {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.destinations-title {
-    font-size: 0.75rem;
-    color: var(--accent-gold);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.destinations-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
-}
-
-.destination-item {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--accent-gold);
-    font-size: 0.8rem;
-}
-
-.destination-item:hover {
-    background-color: rgba(212, 175, 55, 0.1);
-    border-color: var(--accent-gold);
-}
-
-.destination-item i {
-    font-size: 1rem;
-}
-
-/* Time Picker */
-.time-picker {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 0.5rem;
-    border-radius: 0;
-}
-
-.time-picker select {
-    flex: 1;
-    border: none;
-    background-color: transparent;
-    padding: 0.5rem;
-    color: var(--text-white);
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.time-picker span {
-    color: var(--accent-gold);
-    font-weight: 600;
-}
-
-/* Checkbox */
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1.5rem;
-    padding: 0.8rem;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: var(--accent-gold);
-}
-
-.checkbox-group label {
-    margin: 0;
-    cursor: pointer;
-    color: var(--text-white);
-    font-size: 0.9rem;
-}
-
-/* Booking Summary */
-.booking-summary {
-    background-color: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 0;
-    border: 1px solid var(--border-color);
-    margin-bottom: 2rem;
-}
-
-.booking-summary h4 {
-    color: var(--accent-gold);
-    margin-bottom: 1rem;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.summary-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-gray);
-    font-size: 0.9rem;
-}
-
-.summary-item:last-child {
-    border-bottom: none;
-}
-
-.summary-item span:last-child {
-    color: var(--accent-gold);
-    font-weight: 600;
-}
-
-/* Form Actions */
-.form-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
-.btn-next,
-.btn-back {
-    padding: 0.9rem 1.8rem;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border: none;
-    border-radius: 0;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.btn-next {
-    background-color: var(--primary-dark);
-    color: var(--text-white);
-    border: 1px solid var(--border-color);
-    flex: 1;
-}
-
-.btn-next:hover {
-    background-color: var(--accent-gold);
-    color: var(--primary-dark);
-    border-color: var(--accent-gold);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-}
-
-.btn-back {
-    background-color: transparent;
-    color: var(--accent-gold);
-    border: 1px solid var(--accent-gold);
-    flex: 1;
-}
-
-.btn-back:hover {
-    background-color: var(--accent-gold);
-    color: var(--primary-dark);
-}
-
-.btn-action {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    background-color: var(--primary-light);
-    border: 1px solid var(--border-color);
-    color: var(--accent-gold);
-    padding: 1.2rem;
-    border-radius: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.btn-action:hover {
-    border-color: var(--accent-gold);
-    background-color: rgba(212, 175, 55, 0.1);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-}
-
-.btn-action i {
-    font-size: 1.8rem;
-}
-
-/* Success Message */
-.success-message {
-    text-align: center;
-}
-
-.success-icon {
-    font-size: 4rem;
-    color: var(--success-color);
-    margin-bottom: 1rem;
-}
-
-.success-message p {
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    color: var(--success-color);
-    font-weight: 600;
-}
-
-.booking-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-/* ==================== MY BOOKINGS SECTION ==================== */
-.my-bookings-section {
-    background-color: var(--primary-dark);
-    padding: 4rem 2rem;
-    min-height: 500px;
-}
-
-.bookings-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.bookings-container h2 {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    color: var(--accent-gold);
-    letter-spacing: 2px;
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.bookings-list {
-    display: grid;
-    gap: 1.5rem;
-}
-
-.booking-card {
-    background-color: var(--primary-light);
-    padding: 1.8rem;
-    border-radius: 0;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.booking-card:hover {
-    border-color: var(--accent-gold);
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-}
-
-.booking-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.booking-card h3 {
-    color: var(--accent-gold);
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0;
-}
-
-.btn-delete {
-    background-color: var(--danger-color);
-    color: var(--text-white);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.btn-delete:hover {
-    background-color: #ff5252;
-    transform: translateY(-2px);
-}
-
-.booking-card p {
-    margin-bottom: 0.5rem;
-    color: var(--text-gray);
-    font-size: 0.9rem;
-}
-
-.booking-card strong {
-    color: var(--text-white);
-}
-
-.no-bookings {
-    text-align: center;
-    color: var(--text-light-gray);
-    padding: 3rem;
-    font-size: 1rem;
-}
-
-/* Delete All Button */
-.delete-all-section {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.btn-delete-all {
-    background-color: var(--danger-color);
-    color: var(--text-white);
-    border: none;
-    padding: 0.9rem 2rem;
-    border-radius: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.btn-delete-all:hover {
-    background-color: #ff5252;
-    transform: translateY(-2px);
-}
-
-/* ==================== PDF Modal ==================== */
-.pdf-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
-    overflow-y: auto;
-    padding: 1rem;
-}
-
-.pdf-modal.active {
-    display: block;
-}
-
-.pdf-content {
-    background-color: var(--text-white);
-    color: var(--primary-dark);
-    padding: 2rem;
-    margin: 1rem auto;
-    max-width: 600px;
-    min-height: 800px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.pdf-header {
-    text-align: center;
-    border-bottom: 3px solid var(--accent-gold);
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.pdf-header h1 {
-    font-size: 2rem;
-    margin-bottom: 0.3rem;
-    letter-spacing: 2px;
-}
-
-.pdf-header p {
-    color: var(--accent-gold);
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    margin: 0.3rem 0;
-}
-
-.pdf-section {
-    margin-bottom: 2rem;
-}
-
-.pdf-section h2 {
-    font-size: 1.2rem;
-    color: var(--accent-gold);
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-    letter-spacing: 1px;
-}
-
-.pdf-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.pdf-row:last-child {
-    border-bottom: none;
-}
-
-.pdf-label {
-    font-weight: bold;
-    color: var(--primary-dark);
-}
-
-.pdf-value {
-    color: var(--accent-gold);
-    font-weight: 600;
-}
-
-.pdf-footer {
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 2px solid var(--border-color);
-    color: var(--text-light-gray);
-    font-size: 0.85rem;
-}
-
-.pdf-close-btn {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background-color: var(--danger-color);
-    color: var(--text-white);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 0;
-    cursor: pointer;
-    font-weight: 600;
-    z-index: 1001;
-    font-family: 'Times New Roman', 'Georgia', serif;
-}
-
-.pdf-close-btn:hover {
-    background-color: #ff5252;
-}
-
-/* ==================== FOOTER ==================== */
-.footer {
-    background-color: var(--primary-dark);
-    padding: 2rem;
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-}
-
-.footer p {
-    color: var(--text-gray);
-    font-size: 0.85rem;
-}
-
-.footer p:first-child {
-    margin-bottom: 0.3rem;
-    font-weight: 600;
-}
-
-/* ==================== RESPONSIVE - TABLET ==================== */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero h2 {
-        font-size: 1.8rem;
-    }
-
-    .nav-menu {
-        gap: 1rem;
-        font-size: 0.8rem;
-    }
-
-    .booking-actions {
-        grid-template-columns: 1fr;
-    }
-
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .destinations-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .booking-card-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .btn-delete {
-        margin-top: 1rem;
-        width: 100%;
-    }
-
-    .pdf-content {
-        padding: 1.5rem;
-        min-height: auto;
-    }
-}
-
-/* ==================== RESPONSIVE - MOBILE/iPhone ==================== */
-@media (max-width: 480px) {
-    * {
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-        font-size: 14px;
-    }
-
-    .hero {
-        padding: 2rem 1rem;
-        min-height: 500px;
-    }
-
-    .hero h1 {
-        font-size: 1.8rem;
-        letter-spacing: 2px;
-    }
-
-    .hero h2 {
-        font-size: 1.3rem;
-        letter-spacing: 2px;
-    }
-
-    .hero-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    .navbar {
-        padding: 0.8rem 1rem;
-    }
-
-    .navbar-container {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .logo-text {
-        font-size: 1.3rem;
-        letter-spacing: 2px;
-    }
-
-    .logo-subtitle {
-        font-size: 0.6rem;
-    }
-
-    .nav-menu {
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
-    }
-
-    .nav-link {
-        font-size: 0.8rem;
-        padding: 0.5rem 0;
-    }
-
-    .booking-section {
-        padding: 2rem 1rem;
-    }
-
-    .booking-container {
-        padding: 1.5rem;
-        max-width: 100%;
-        margin: 0;
-    }
-
-    .booking-container h2 {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .steps-indicator {
-        margin-bottom: 1.5rem;
-    }
-
-    .step {
-        width: 35px;
-        height: 35px;
-        font-size: 0.8rem;
-    }
-
-    .form-step h3 {
-        font-size: 0.9rem;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .form-step h3 i {
-        font-size: 1rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.2rem;
-    }
-
-    .form-group label {
-        font-size: 0.75rem;
-        margin-bottom: 0.4rem;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        padding: 0.75rem;
-        font-size: 16px;
-    }
-
-    .passenger-counter {
-        gap: 1rem;
-        padding: 0.6rem;
-    }
-
-    .counter-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 1.1rem;
-    }
-
-    #passengerCount {
-        font-size: 1rem;
-    }
-
-    .destinations-grid {
-        grid-template-columns: 1fr;
-        gap: 0.6rem;
-    }
-
-    .destination-item {
-        padding: 0.7rem;
-        font-size: 0.75rem;
-    }
-
-    .time-picker {
-        padding: 0.4rem;
-    }
-
-    .time-picker select {
-        padding: 0.4rem 0.2rem;
-        font-size: 14px;
-    }
-
-    .checkbox-group {
-        padding: 0.6rem;
-        gap: 0.6rem;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-    }
-
-    .checkbox-group label {
-        font-size: 0.85rem;
-    }
-
-    .booking-summary {
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .booking-summary h4 {
-        font-size: 0.75rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .summary-item {
-        font-size: 0.8rem;
-        padding: 0.5rem 0;
-    }
-
-    .form-actions {
-        gap: 0.6rem;
-        margin-top: 1.5rem;
-    }
-
-    .btn-next,
-    .btn-back {
-        padding: 0.7rem 1rem;
-        font-size: 0.75rem;
-        letter-spacing: 0.5px;
-    }
-
-    .btn-action {
-        padding: 0.8rem;
-        gap: 0.5rem;
-        font-size: 0.7rem;
-    }
-
-    .btn-action i {
-        font-size: 1.5rem;
-    }
-
-    .booking-actions {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.8rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .btn-primary {
-        padding: 0.9rem 1.5rem;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-    }
-
-    .my-bookings-section {
-        padding: 2rem 1rem;
-    }
-
-    .bookings-container h2 {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .booking-card {
-        padding: 1.2rem;
-    }
-
-    .booking-card h3 {
-        font-size: 0.9rem;
-    }
-
-    .booking-card p {
-        font-size: 0.85rem;
-        margin-bottom: 0.4rem;
-    }
-
-    .btn-delete {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.7rem;
-    }
-
-    .btn-delete-all {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.75rem;
-    }
-
-    .no-bookings {
-        padding: 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .delete-all-section {
-        margin-top: 1.5rem;
-    }
-
-    .footer {
-        padding: 1.5rem 1rem;
-    }
-
-    .footer p {
-        font-size: 0.75rem;
-    }
-
-    /* PDF Modal Mobile */
-    .pdf-modal {
-        padding: 0;
-    }
-
-    .pdf-content {
-        padding: 1rem;
-        max-width: 100%;
-        margin: 3rem 0.5rem 1rem;
-        min-height: auto;
-    }
-
-    .pdf-header h1 {
-        font-size: 1.5rem;
-    }
-
-    .pdf-header p {
-        font-size: 0.8rem;
-    }
-
-    .pdf-section h2 {
-        font-size: 1rem;
-    }
-
-    .pdf-row {
-        font-size: 0.85rem;
-        padding: 0.6rem 0;
-    }
-
-    .pdf-close-btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.75rem;
-    }
-}
-
-/* ==================== PRINT STYLES ==================== */
-@media print {
-    body {
-        background-color: white;
-        color: black;
-    }
-
-    .navbar, .booking-section, .my-bookings-section, .footer {
-        display: none;
-    }
-
-    .pdf-modal {
-        position: static;
-        background-color: white;
-    }
-
-    .pdf-content {
-        box-shadow: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .pdf-close-btn {
-        display: none;
-    }
-}
+        :root {
+            --bg: #070707;
+            --panel: rgba(18, 18, 18, 0.94);
+            --panel-soft: rgba(33, 16, 16, 0.9);
+            --gold: #d8ad5c;
+            --gold-soft: #f1d498;
+            --red: #c91712;
+            --red-soft: #7f0906;
+            --white: #f8f7f4;
+            --muted: #c6bfaf;
+            --line: rgba(216, 173, 92, 0.32);
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: var(--white);
+            background:
+                radial-gradient(circle at top left, rgba(201, 23, 18, 0.22), transparent 28%),
+                radial-gradient(circle at top right, rgba(216, 173, 92, 0.12), transparent 25%),
+                linear-gradient(180deg, #101010 0%, #050505 100%);
+            display: flex;
+            justify-content: center;
+            padding: 24px 16px 40px;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+            background: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .app-shell {
+            width: min(100%, 430px);
+            position: relative;
+        }
+
+        .page-card {
+            background: rgba(8, 8, 8, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .page-card::before,
+        .page-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .page-card::before {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(216, 173, 92, 0.18), transparent 22%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 22%);
+            z-index: -2;
+        }
+
+        .page-card::after {
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 26px 26px;
+            opacity: 0.12;
+            z-index: -1;
+        }
+
+        .hero {
+            padding: max(24px, env(safe-area-inset-top)) 22px 28px;
+        }
+
+        .crest {
+            width: 88px;
+            height: 104px;
+            margin: 0 auto 18px;
+            position: relative;
+            clip-path: polygon(50% 0%, 88% 16%, 88% 58%, 50% 100%, 12% 58%, 12% 16%);
+            background: linear-gradient(180deg, #f3d38f 0%, #9d6d1f 100%);
+            padding: 5px;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+        }
+
+        .crest-inner {
+            width: 100%;
+            height: 100%;
+            clip-path: inherit;
+            background: radial-gradient(circle at 50% 25%, #8b1d17 0%, #490403 100%);
+            display: grid;
+            place-items: center;
+            color: #ffd77b;
+            font-size: 2.2rem;
+        }
+
+        .divider {
+            width: 120px;
+            height: 2px;
+            margin: 0 auto 22px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .hero h1,
+        .hero h2,
+        .tagline,
+        .section-title,
+        .footer-cta {
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            text-align: center;
+            color: var(--gold-soft);
+            font-size: clamp(2.6rem, 10vw, 4.2rem);
+            line-height: 0.92;
+            letter-spacing: 0.06em;
+            font-weight: 800;
+        }
+
+        .hero h2 {
+            text-align: center;
+            color: #ef2918;
+            font-size: clamp(2.7rem, 11vw, 4.5rem);
+            line-height: 0.92;
+            letter-spacing: 0.05em;
+            font-weight: 800;
+            margin-top: 6px;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--gold-soft);
+            font-size: 1rem;
+            letter-spacing: 0.28em;
+            font-weight: 600;
+        }
+
+        .browser-banner {
+            margin-top: 22px;
+            padding: 16px 18px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: rgba(13, 13, 13, 0.84);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .browser-banner i {
+            color: var(--gold);
+            font-size: 1.75rem;
+        }
+
+        .browser-banner strong {
+            display: block;
+            font-size: 1.15rem;
+            letter-spacing: 0.03em;
+        }
+
+        .browser-banner span {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .phone-frame {
+            margin: 28px auto 24px;
+            width: min(100%, 360px);
+            border-radius: 42px;
+            padding: 14px;
+            background: linear-gradient(180deg, #464646 0%, #171717 12%, #050505 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), 0 18px 44px rgba(0, 0, 0, 0.55);
+            position: relative;
+        }
+
+        .phone-frame::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 118px;
+            height: 26px;
+            background: #050505;
+            border-radius: 0 0 18px 18px;
+            z-index: 3;
+        }
+
+        .phone-screen {
+            background: linear-gradient(180deg, rgba(15, 15, 15, 0.98) 0%, rgba(8, 8, 8, 0.98) 100%);
+            border-radius: 30px;
+            padding: 24px 16px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-bar,
+        .app-header,
+        .service-grid,
+        .benefits-grid {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-bar {
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.84rem;
+            margin-bottom: 18px;
+        }
+
+        .app-header {
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .brand-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(216, 173, 92, 0.22), rgba(201, 23, 18, 0.28));
+            border: 1px solid rgba(216, 173, 92, 0.35);
+            display: grid;
+            place-items: center;
+            color: var(--gold);
+        }
+
+        .brand strong {
+            display: block;
+            font-size: 0.98rem;
+            color: var(--gold-soft);
+        }
+
+        .brand span {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        .menu-button {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .emergency-card {
+            background: radial-gradient(circle at top center, rgba(150, 10, 10, 0.45), rgba(83, 4, 4, 0.94));
+            border-radius: 26px;
+            border: 1px solid rgba(255, 97, 81, 0.7);
+            padding: 24px 18px;
+            text-align: center;
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04), 0 16px 30px rgba(62, 5, 5, 0.4);
+        }
+
+        .emergency-card h3 {
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .emergency-card p:first-of-type {
+            font-size: 1rem;
+            margin-top: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .fire-icon {
+            width: 104px;
+            height: 104px;
+            margin: 18px auto;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.07);
+            display: grid;
+            place-items: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.12);
+        }
+
+        .emergency-text {
+            color: rgba(255, 255, 255, 0.94);
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 250px;
+            margin: 0 auto 20px;
+        }
+
+        .call-trigger {
+            width: 112px;
+            height: 112px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: radial-gradient(circle at top, #ff5144 0%, #bd140d 58%, #6b0603 100%);
+            border: 4px solid rgba(255, 216, 166, 0.24);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 2.5rem;
+            box-shadow: 0 0 0 6px rgba(255, 77, 62, 0.2), 0 18px 32px rgba(67, 6, 6, 0.5);
+        }
+
+        .call-trigger span {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+        }
+
+        .call-caption {
+            color: #ff4c3d;
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--gold-soft);
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin: 22px 0 16px;
+            letter-spacing: 0.07em;
+        }
+
+        .service-grid {
+            gap: 12px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .service-item {
+            flex: 1 1 calc(50% - 6px);
+            min-width: 134px;
+            background: rgba(22, 22, 22, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            padding: 14px 12px;
+            text-align: center;
+        }
+
+        .service-item i {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 1.55rem;
+            color: white;
+            background: radial-gradient(circle at top, rgba(201, 23, 18, 0.55), rgba(20, 20, 20, 0.88));
+            border: 1px solid rgba(216, 173, 92, 0.35);
+        }
+
+        .service-item strong {
+            display: block;
+            font-size: 0.92rem;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .contact-card {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: rgba(15, 15, 15, 0.92);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .contact-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            font-size: 1.65rem;
+            color: var(--gold);
+            background: rgba(216, 173, 92, 0.12);
+            border: 1px solid rgba(216, 173, 92, 0.28);
+            flex-shrink: 0;
+        }
+
+        .contact-card p {
+            color: var(--gold-soft);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-bottom: 4px;
+        }
+
+        .contact-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .contact-note {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 6px;
+        }
+
+        .contact-card button {
+            margin-left: auto;
+            align-self: stretch;
+            padding: 0 16px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(216, 173, 92, 0.24), rgba(216, 173, 92, 0.1));
+            color: var(--gold-soft);
+            border: 1px solid rgba(216, 173, 92, 0.26);
+            font-weight: 700;
+        }
+
+        .benefits {
+            padding: 0 22px 22px;
+        }
+
+        .benefits-grid {
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .benefit {
+            flex: 1 1 120px;
+            text-align: center;
+            padding: 10px 6px;
+        }
+
+        .benefit i {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .benefit strong {
+            display: block;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            text-transform: uppercase;
+            color: #ebe0cb;
+        }
+
+        .footer-cta {
+            margin: 8px 22px 26px;
+            border-radius: 24px;
+            border: 1px solid var(--line);
+            padding: 18px 16px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(22, 22, 22, 0.95), rgba(10, 10, 10, 0.98));
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-cta span {
+            color: var(--gold-soft);
+        }
+
+        .footer-cta strong {
+            color: #f1291c;
+        }
+
+        .quick-actions {
+            position: sticky;
+            bottom: 16px;
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .action-button {
+            min-height: 58px;
+            border-radius: 20px;
+            background: rgba(16, 16, 16, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        .action-button.primary {
+            background: linear-gradient(180deg, #dd2d20 0%, #8a0b07 100%);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 18px 16px max(18px, env(safe-area-inset-bottom));
+            z-index: 100;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(100%, 430px);
+            background: #101010;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .modal-card p {
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--gold-soft);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .phone-input {
+            width: 100%;
+            border-radius: 18px;
+            border: 1px solid rgba(216, 173, 92, 0.28);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--white);
+            padding: 16px;
+            font-size: 1.05rem;
+        }
+
+        .phone-input:focus {
+            outline: 2px solid rgba(216, 173, 92, 0.34);
+            outline-offset: 2px;
+        }
+
+        .modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .modal-actions button {
+            min-height: 54px;
+            border-radius: 18px;
+            font-weight: 700;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-primary-modal {
+            background: linear-gradient(180deg, #e03225 0%, #980b08 100%);
+        }
+
+        @media (max-width: 380px) {
+            .hero {
+                padding-inline: 16px;
+            }
+
+            .tagline {
+                letter-spacing: 0.18em;
+                font-size: 0.9rem;
+            }
+
+            .browser-banner {
+                padding: 14px;
+            }
+
+            .emergency-card h3 {
+                font-size: 1.7rem;
+            }
+
+            .contact-card {
+                flex-wrap: wrap;
+            }
+
+            .contact-card button {
+                width: 100%;
+                min-height: 48px;
+                margin-left: 0;
+            }
+
+            .contact-number {
+                font-size: 1.7rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="logo">
-                <span class="logo-text">CITADINES</span>
-                <span class="logo-subtitle">APART'HOTEL PARIS</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Accueil</a></li>
-                <li><a href="#booking" class="nav-link">Réserver</a></li>
-                <li><a href="#mybookings" class="nav-link">Mes Réservations</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-icon">
-                <i class="fas fa-building"></i>
-            </div>
-            <h1>CITADINES</h1>
-            <p class="subtitle">APART'HOTEL PARIS</p>
-            <div class="divider"></div>
-            <h2>TAXI BOOKING</h2>
-            <p class="tagline">Luxury Concierge Service</p>
-            <p class="description">Book a taxi for your guests</p>
-            <p class="features">Fast • Reliable • Premium Service</p>
-            <button class="btn-primary" onclick="scrollToBooking()"><i class="fas fa-plus"></i> NEW BOOKING</button>
-        </div>
-    </section>
-
-    <!-- Booking Section -->
-    <section id="booking" class="booking-section">
-        <div class="booking-container">
-            <h2><i class="fas fa-calendar-check"></i> NOUVELLE RÉSERVATION</h2>
-            
-            <!-- Steps Indicator -->
-            <div class="steps-indicator">
-                <div class="step active" id="step1">1</div>
-                <div class="step" id="step2">2</div>
-                <div class="step" id="step3">3</div>
-                <div class="step" id="step4">4</div>
-                <div class="step" id="step5">5</div>
-            </div>
-
-            <!-- Step 1: Guest Information -->
-            <div class="form-step active" id="form-step-1">
-                <h3><i class="fas fa-user"></i> INFORMATIONS CLIENT</h3>
-                <form>
-                    <div class="form-group">
-                        <label><i class="fas fa-door-open"></i> Numéro d'Appartement</label>
-                        <input type="text" placeholder="ex. 502" id="apartmentNumber">
+    <main class="app-shell">
+        <div class="page-card">
+            <section class="hero">
+                <div class="crest" aria-hidden="true">
+                    <div class="crest-inner">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
                     </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-user-circle"></i> Nom de l'invité (Optionnel)</label>
-                        <input type="text" placeholder="ex. John Smith" id="guestName">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-users"></i> Nombre de Passagers</label>
-                        <div class="passenger-counter">
-                            <button type="button" class="counter-btn" onclick="decrementPassengers()">−</button>
-                            <span id="passengerCount">2</span>
-                            <button type="button" class="counter-btn" onclick="incrementPassengers()">+</button>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Step 2: Journey Details -->
-            <div class="form-step" id="form-step-2">
-                <h3><i class="fas fa-map-marker-alt"></i> DÉTAILS DU TRAJET</h3>
-                <form>
-                    <div class="form-group">
-                        <label>Destination</label>
-                        <select id="destination" onchange="updateDestinations()">
-                            <option value="">Sélectionner une destination</option>
-                            <option value="cdg">Charles de Gaulle Airport</option>
-                            <option value="orly">Orly Airport</option>
-                            <option value="nord">Gare du Nord</option>
-                            <option value="lyon">Gare de Lyon</option>
-                            <option value="disneyland">Disneyland Paris</option>
-                            <option value="beauvais">Beauvais</option>
-                        </select>
-                    </div>
-
-                    <div class="destinations-section">
-                        <div class="destinations-title">Destinations Populaires</div>
-                        <div class="destinations-grid">
-                            <div class="destination-item" onclick="selectDestination('cdg')">
-                                <span><i class="fas fa-plane"></i> Charles de Gaulle</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                            <div class="destination-item" onclick="selectDestination('orly')">
-                                <span><i class="fas fa-plane"></i> Orly</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                            <div class="destination-item" onclick="selectDestination('nord')">
-                                <span><i class="fas fa-train"></i> Gare du Nord</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                            <div class="destination-item" onclick="selectDestination('lyon')">
-                                <span><i class="fas fa-train"></i> Gare de Lyon</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                            <div class="destination-item" onclick="selectDestination('disneyland')">
-                                <span><i class="fas fa-crown"></i> Disneyland</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                            <div class="destination-item" onclick="selectDestination('beauvais')">
-                                <span><i class="fas fa-plane"></i> Beauvais</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" style="margin-top: 1.5rem;">
-                        <label><i class="fas fa-calendar"></i> Date de Départ</label>
-                        <input type="date" id="departureDate">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="previousStep()"><i class="fas fa-chevron-left"></i> BACK</button>
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Step 3: Departure Details -->
-            <div class="form-step" id="form-step-3">
-                <h3><i class="fas fa-clock"></i> DÉTAILS DE DÉPART</h3>
-                <form>
-                    <div class="form-group">
-                        <label>Heure de Départ</label>
-                        <div class="time-picker">
-                            <select id="departureHour">
-                                <option value="">HH</option>
-                                <option value="00">00</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                            </select>
-                            <span>:</span>
-                            <select id="departureMinute">
-                                <option value="">MM</option>
-                                <option value="00">00</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="45">45</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-sticky-note"></i> Notes de Réception (Optionnel)</label>
-                        <textarea placeholder="Toute instruction spéciale, détails de vol, point de rendez-vous..." id="receptionNotes"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="previousStep()"><i class="fas fa-chevron-left"></i> BACK</button>
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Step 4: Confirmation -->
-            <div class="form-step" id="form-step-4">
-                <h3><i class="fas fa-check-circle"></i> CONFIRMATION</h3>
-                <form>
-                    <div class="form-group">
-                        <label><i class="fas fa-user-tie"></i> Géré par Réceptionniste</label>
-                        <input type="text" placeholder="Votre nom" id="receptionistName">
-                    </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="driverConfirmed">
-                        <label for="driverConfirmed"><i class="fas fa-car"></i> Oui, le chauffeur a été confirmé</label>
-                    </div>
-                    
-                    <div class="booking-summary">
-                        <h4><i class="fas fa-receipt"></i> RÉSUMÉ DE LA RÉSERVATION</h4>
-                        <div class="summary-item">
-                            <span><i class="fas fa-users"></i> Passagers</span>
-                            <span id="summaryPassengers">2</span>
-                        </div>
-                        <div class="summary-item">
-                            <span><i class="fas fa-map-pin"></i> Destination</span>
-                            <span id="summaryDestination">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span><i class="fas fa-calendar"></i> Date</span>
-                            <span id="summaryDate">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span><i class="fas fa-clock"></i> Heure</span>
-                            <span id="summaryTime">-</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="previousStep()"><i class="fas fa-chevron-left"></i> BACK</button>
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Step 5: Completion -->
-            <div class="form-step" id="form-step-5">
-                <h3><i class="fas fa-check"></i> RÉSERVATION CONFIRMÉE</h3>
-                <div class="success-message">
-                    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                    <p>Votre réservation a été enregistrée avec succès!</p>
-                    
-                    <div class="booking-actions">
-                        <button type="button" class="btn-action" onclick="viewPDF()">
-                            <i class="fas fa-file-pdf"></i>
-                            VOIR PDF
-                        </button>
-                        <button type="button" class="btn-action" onclick="downloadPDF()">
-                            <i class="fas fa-download"></i>
-                            TÉLÉCHARGER
-                        </button>
-                        <button type="button" class="btn-action" onclick="printBooking()">
-                            <i class="fas fa-print"></i>
-                            IMPRIMER
-                        </button>
-                        <button type="button" class="btn-action" onclick="sendWhatsApp()">
-                            <i class="fas fa-whatsapp"></i>
-                            WHATSAPP
-                        </button>
-                    </div>
-
-                    <button type="button" class="btn-primary" onclick="newBooking()"><i class="fas fa-plus"></i> NOUVELLE RÉSERVATION</button>
                 </div>
-            </div>
+                <div class="divider"></div>
+                <h1>Sécurité</h1>
+                <h2>Incendie</h2>
+                <p class="tagline">Prévenir • Protéger • Sauver</p>
+
+                <div class="browser-banner">
+                    <i class="fa-solid fa-globe"></i>
+                    <div>
+                        <strong>Application web</strong>
+                        <span>Accessible depuis votre navigateur sur iPhone</span>
+                    </div>
+                </div>
+
+                <div class="phone-frame" aria-label="Aperçu iPhone de l'application">
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span><i class="fa-solid fa-signal"></i> <i class="fa-solid fa-wifi"></i> <i class="fa-solid fa-battery-three-quarters"></i></span>
+                        </div>
+
+                        <div class="app-header">
+                            <div class="brand">
+                                <div class="brand-badge"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div>
+                                    <strong>Sécurité Incendie</strong>
+                                    <span>Mode urgence mobile</span>
+                                </div>
+                            </div>
+                            <button class="menu-button" type="button" aria-label="Ouvrir l'appel d'urgence" data-call-trigger>
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </div>
+
+                        <section class="emergency-card">
+                            <h3>Appel d'urgence</h3>
+                            <p>En cas d'incendie</p>
+                            <div class="fire-icon" aria-hidden="true">
+                                <i class="fa-solid fa-fire-flame-curved"></i>
+                            </div>
+                            <p class="emergency-text">Appuyez sur le bouton pour modifier si besoin le numéro fixe puis lancer l'appel immédiatement.</p>
+                            <button class="call-trigger" type="button" aria-label="Modifier le numéro puis appeler" data-call-trigger>
+                                <i class="fa-solid fa-phone-volume"></i>
+                                <span>Modifier le numéro puis appeler</span>
+                            </button>
+                            <div class="call-caption">Appuyez ici</div>
+                        </section>
+
+                        <h3 class="section-title">Services disponibles</h3>
+                        <div class="service-grid">
+                            <article class="service-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <strong>Localisation automatique</strong>
+                            </article>
+                            <article class="service-item">
+                                <i class="fa-solid fa-bell"></i>
+                                <strong>Alerte immédiate</strong>
+                            </article>
+                            <article class="service-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <strong>Mise en relation directe</strong>
+                            </article>
+                            <article class="service-item">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                                <strong>Conforme aux normes</strong>
+                            </article>
+                        </div>
+
+                        <section class="contact-card" aria-label="Numéro de contact">
+                            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <p>Contactez-nous</p>
+                                <div class="contact-number" id="displayPhone">01 23 45 67 89</div>
+                                <div class="contact-note">Numéro fixe modifiable avant chaque appel.</div>
+                            </div>
+                            <button type="button" data-call-trigger>Modifier / appeler</button>
+                        </section>
+                    </div>
+                </div>
+            </section>
+
+            <section class="benefits">
+                <div class="benefits-grid">
+                    <article class="benefit">
+                        <i class="fa-solid fa-shield"></i>
+                        <strong>Protection 24/7</strong>
+                    </article>
+                    <article class="benefit">
+                        <i class="fa-solid fa-fire"></i>
+                        <strong>Détection rapide</strong>
+                    </article>
+                    <article class="benefit">
+                        <i class="fa-solid fa-bell"></i>
+                        <strong>Alerte immédiate</strong>
+                    </article>
+                    <article class="benefit">
+                        <i class="fa-solid fa-user-helmet-safety"></i>
+                        <strong>Intervention rapide</strong>
+                    </article>
+                    <article class="benefit">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <strong>Conforme aux normes</strong>
+                    </article>
+                </div>
+            </section>
+
+            <div class="footer-cta"><span>La sécurité de tous,</span> <strong>notre priorité</strong></div>
         </div>
-    </section>
 
-    <!-- My Bookings Section -->
-    <section id="mybookings" class="my-bookings-section">
-        <div class="bookings-container">
-            <h2><i class="fas fa-history"></i> MES RÉSERVATIONS</h2>
-            <div id="bookingsList" class="bookings-list">
-                <p class="no-bookings"><i class="fas fa-inbox"></i> Aucune réservation pour le moment</p>
-            </div>
-            <div class="delete-all-section" id="deleteAllSection" style="display: none;">
-                <button type="button" class="btn-delete-all" onclick="deleteAllBookings()"><i class="fas fa-trash"></i> SUPPRIMER TOUTES LES RÉSERVATIONS</button>
-            </div>
+        <div class="quick-actions">
+            <button class="action-button" type="button" data-call-trigger>
+                <i class="fa-solid fa-pen"></i>
+                Modifier le numéro
+            </button>
+            <button class="action-button primary" type="button" data-call-trigger>
+                <i class="fa-solid fa-phone-volume"></i>
+                Appeler
+            </button>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2024 Citadines Taxi Booking. Tous droits réservés.</p>
-        <p>Luxury Concierge Service</p>
-    </footer>
-
-    <!-- PDF Modal -->
-    <div class="pdf-modal" id="pdfModal">
-        <button class="pdf-close-btn" onclick="closePDFModal()"><i class="fas fa-times"></i> Fermer</button>
-        <div class="pdf-content" id="pdfContent">
-            <!-- PDF content will be generated here -->
+    <div class="modal" id="callModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <h4 id="modalTitle">Numéro d'appel</h4>
+            <p>À chaque utilisation de l'icône appel, vous pouvez modifier le numéro fixe avant de lancer l'appel depuis l'iPhone.</p>
+            <label class="input-label" for="phoneInput">Numéro de téléphone</label>
+            <input id="phoneInput" class="phone-input" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="01 23 45 67 89">
+            <div class="modal-actions">
+                <button class="btn-secondary" type="button" id="cancelCallEdit">Annuler</button>
+                <button class="btn-primary-modal" type="button" id="saveAndCall">Enregistrer et appeler</button>
+            </div>
         </div>
     </div>
 
     <script>
-let currentStep = 1;
-let passengerCount = 2;
-let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-let lastBooking = null;
+        const storageKey = 'fireSafetyPhoneNumber';
+        const defaultPhoneNumber = '01 23 45 67 89';
+        const displayPhone = document.getElementById('displayPhone');
+        const callModal = document.getElementById('callModal');
+        const phoneInput = document.getElementById('phoneInput');
+        const callTriggers = document.querySelectorAll('[data-call-trigger]');
+        const cancelCallEdit = document.getElementById('cancelCallEdit');
+        const saveAndCall = document.getElementById('saveAndCall');
 
-document.addEventListener('DOMContentLoaded', function() {
-    setMinDate();
-    loadBookings();
-});
-
-function setMinDate() {
-    const today = new Date();
-    const dateInput = document.getElementById('departureDate');
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const minDate = `${year}-${month}-${day}`;
-    dateInput.min = minDate;
-}
-
-function incrementPassengers() {
-    passengerCount++;
-    document.getElementById('passengerCount').textContent = passengerCount;
-    document.getElementById('summaryPassengers').textContent = passengerCount;
-}
-
-function decrementPassengers() {
-    if (passengerCount > 1) {
-        passengerCount--;
-        document.getElementById('passengerCount').textContent = passengerCount;
-        document.getElementById('summaryPassengers').textContent = passengerCount;
-    }
-}
-
-function selectDestination(dest) {
-    document.getElementById('destination').value = dest;
-    updateDestinations();
-}
-
-function updateDestinations() {
-    // Visual feedback for selected destination
-}
-
-function nextStep() {
-    if (validateStep(currentStep)) {
-        if (currentStep < 5) {
-            currentStep++;
-            updateFormDisplay();
-            updateStepsIndicator();
+        function getSavedPhoneNumber() {
+            return localStorage.getItem(storageKey) || defaultPhoneNumber;
         }
-    }
-}
 
-function previousStep() {
-    if (currentStep > 1) {
-        currentStep--;
-        updateFormDisplay();
-        updateStepsIndicator();
-    }
-}
-
-function updateFormDisplay() {
-    for (let i = 1; i <= 5; i++) {
-        document.getElementById(`form-step-${i}`).classList.remove('active');
-    }
-    document.getElementById(`form-step-${currentStep}`).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function updateStepsIndicator() {
-    for (let i = 1; i <= 5; i++) {
-        const step = document.getElementById(`step${i}`);
-        if (i <= currentStep) {
-            step.classList.add('active');
-        } else {
-            step.classList.remove('active');
+        function updatePhoneNumber(phoneNumber) {
+            displayPhone.textContent = phoneNumber;
+            phoneInput.value = phoneNumber;
         }
-    }
-}
 
-function validateStep(step) {
-    switch(step) {
-        case 1:
-            const apartment = document.getElementById('apartmentNumber').value;
-            if (!apartment.trim()) {
-                alert('Veuillez entrer le numéro d\'appartement');
-                return false;
+        function normalizePhoneForTel(phoneNumber) {
+            return phoneNumber.replace(/[^\d+]/g, '');
+        }
+
+        function openCallModal() {
+            updatePhoneNumber(getSavedPhoneNumber());
+            callModal.classList.add('open');
+            callModal.setAttribute('aria-hidden', 'false');
+            window.setTimeout(() => phoneInput.focus(), 50);
+        }
+
+        function closeCallModal() {
+            callModal.classList.remove('open');
+            callModal.setAttribute('aria-hidden', 'true');
+        }
+
+        function saveAndLaunchCall() {
+            const phoneNumber = phoneInput.value.trim();
+
+            if (!phoneNumber) {
+                alert('Veuillez saisir un numéro fixe avant d\'appeler.');
+                phoneInput.focus();
+                return;
             }
-            return true;
-        case 2:
-            const destination = document.getElementById('destination').value;
-            const date = document.getElementById('departureDate').value;
-            if (!destination) {
-                alert('Veuillez sélectionner une destination');
-                return false;
+
+            localStorage.setItem(storageKey, phoneNumber);
+            updatePhoneNumber(phoneNumber);
+            closeCallModal();
+            window.location.href = `tel:${normalizePhoneForTel(phoneNumber)}`;
+        }
+
+        updatePhoneNumber(getSavedPhoneNumber());
+
+        callTriggers.forEach((trigger) => {
+            trigger.addEventListener('click', openCallModal);
+        });
+
+        cancelCallEdit.addEventListener('click', closeCallModal);
+        saveAndCall.addEventListener('click', saveAndLaunchCall);
+
+        callModal.addEventListener('click', (event) => {
+            if (event.target === callModal) {
+                closeCallModal();
             }
-            if (!date) {
-                alert('Veuillez sélectionner une date');
-                return false;
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && callModal.classList.contains('open')) {
+                closeCallModal();
             }
-            updateSummary();
-            return true;
-        case 3:
-            const hour = document.getElementById('departureHour').value;
-            const minute = document.getElementById('departureMinute').value;
-            if (!hour || !minute) {
-                alert('Veuillez sélectionner l\'heure de départ');
-                return false;
+
+            if (event.key === 'Enter' && document.activeElement === phoneInput && callModal.classList.contains('open')) {
+                saveAndLaunchCall();
             }
-            updateSummary();
-            return true;
-        case 4:
-            updateSummary();
-            return true;
-        default:
-            return true;
-    }
-}
-
-function updateSummary() {
-    document.getElementById('summaryPassengers').textContent = passengerCount;
-
-    const destination = document.getElementById('destination').value;
-    const destinationMap = {
-        'cdg': 'Charles de Gaulle Airport',
-        'orly': 'Orly Airport',
-        'nord': 'Gare du Nord',
-        'lyon': 'Gare de Lyon',
-        'disneyland': 'Disneyland Paris',
-        'beauvais': 'Beauvais'
-    };
-    document.getElementById('summaryDestination').textContent = destinationMap[destination] || '-';
-
-    const date = document.getElementById('departureDate').value;
-    if (date) {
-        const dateObj = new Date(date);
-        document.getElementById('summaryDate').textContent = dateObj.toLocaleDateString('fr-FR');
-    }
-
-    const hour = document.getElementById('departureHour').value;
-    const minute = document.getElementById('departureMinute').value;
-    if (hour && minute) {
-        document.getElementById('summaryTime').textContent = `${hour}:${minute}`;
-    }
-}
-
-function saveBooking() {
-    const booking = {
-        id: Date.now(),
-        apartment: document.getElementById('apartmentNumber').value,
-        guestName: document.getElementById('guestName').value,
-        passengers: passengerCount,
-        destination: document.getElementById('destination').value,
-        date: document.getElementById('departureDate').value,
-        hour: document.getElementById('departureHour').value,
-        minute: document.getElementById('departureMinute').value,
-        notes: document.getElementById('receptionNotes').value,
-        receptionist: document.getElementById('receptionistName').value,
-        driverConfirmed: document.getElementById('driverConfirmed').checked,
-        timestamp: new Date().toLocaleString('fr-FR')
-    };
-
-    bookings.push(booking);
-    lastBooking = booking;
-    localStorage.setItem('bookings', JSON.stringify(bookings));
-    return booking;
-}
-
-function deleteBooking(bookingId) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')) {
-        bookings = bookings.filter(b => b.id !== bookingId);
-        localStorage.setItem('bookings', JSON.stringify(bookings));
-        loadBookings();
-    }
-}
-
-function deleteAllBookings() {
-    if (confirm('Êtes-vous sûr de vouloir supprimer TOUTES les réservations ? Cette action est irréversible.')) {
-        bookings = [];
-        localStorage.setItem('bookings', JSON.stringify(bookings));
-        loadBookings();
-    }
-}
-
-function loadBookings() {
-    const bookingsList = document.getElementById('bookingsList');
-    const deleteAllSection = document.getElementById('deleteAllSection');
-    
-    if (bookings.length === 0) {
-        bookingsList.innerHTML = '<p class="no-bookings"><i class="fas fa-inbox"></i> Aucune réservation pour le moment</p>';
-        deleteAllSection.style.display = 'none';
-        return;
-    }
-
-    deleteAllSection.style.display = 'block';
-    bookingsList.innerHTML = '';
-    
-    bookings.forEach(booking => {
-        const card = document.createElement('div');
-        card.className = 'booking-card';
-        
-        const destinationMap = {
-            'cdg': 'Charles de Gaulle Airport',
-            'orly': 'Orly Airport',
-            'nord': 'Gare du Nord',
-            'lyon': 'Gare de Lyon',
-            'disneyland': 'Disneyland Paris',
-            'beauvais': 'Beauvais'
-        };
-
-        card.innerHTML = `
-            <div class="booking-card-header">
-                <h3><i class="fas fa-ticket-alt"></i> Réservation #${booking.id}</h3>
-                <button type="button" class="btn-delete" onclick="deleteBooking(${booking.id})"><i class="fas fa-trash"></i> Supprimer</button>
-            </div>
-            <p><strong><i class="fas fa-door-open"></i> Appartement:</strong> ${booking.apartment}</p>
-            <p><strong><i class="fas fa-map-pin"></i> Destination:</strong> ${destinationMap[booking.destination] || booking.destination}</p>
-            <p><strong><i class="fas fa-calendar"></i> Date:</strong> ${new Date(booking.date).toLocaleDateString('fr-FR')}</p>
-            <p><strong><i class="fas fa-clock"></i> Heure:</strong> ${booking.hour}:${booking.minute}</p>
-            <p><strong><i class="fas fa-users"></i> Passagers:</strong> ${booking.passengers}</p>
-            <p><strong><i class="fas fa-user-tie"></i> Réceptionniste:</strong> ${booking.receptionist || '-'}</p>
-            <p><strong><i class="fas fa-check"></i> Confirmée:</strong> ${booking.driverConfirmed ? 'Oui ✓' : 'Non'}</p>
-            <p><small style="color: #808080;"><i class="fas fa-info-circle"></i> Créée le: ${booking.timestamp}</small></p>
-        `;
-        
-        bookingsList.appendChild(card);
-    });
-}
-
-function generatePDFHTML(booking) {
-    const destinationMap = {
-        'cdg': 'Charles de Gaulle Airport',
-        'orly': 'Orly Airport',
-        'nord': 'Gare du Nord',
-        'lyon': 'Gare de Lyon',
-        'disneyland': 'Disneyland Paris',
-        'beauvais': 'Beauvais'
-    };
-
-    return `
-        <div class="pdf-header">
-            <h1>CITADINES</h1>
-            <p>APART'HOTEL PARIS</p>
-            <p>TAXI BOOKING REQUEST</p>
-            <p>Luxury Concierge Service</p>
-        </div>
-
-        <div class="pdf-section">
-            <h2>BOOKING DETAILS</h2>
-            <div class="pdf-row">
-                <span class="pdf-label">Booking ID:</span>
-                <span class="pdf-value">#${booking.id}</span>
-            </div>
-            <div class="pdf-row">
-                <span class="pdf-label">Date Created:</span>
-                <span class="pdf-value">${booking.timestamp}</span>
-            </div>
-        </div>
-
-        <div class="pdf-section">
-            <h2>GUEST INFORMATION</h2>
-            <div class="pdf-row">
-                <span class="pdf-label">Apartment Number:</span>
-                <span class="pdf-value">${booking.apartment}</span>
-            </div>
-            <div class="pdf-row">
-                <span class="pdf-label">Guest Name:</span>
-                <span class="pdf-value">${booking.guestName || 'Not specified'}</span>
-            </div>
-            <div class="pdf-row">
-                <span class="pdf-label">Number of Passengers:</span>
-                <span class="pdf-value">${booking.passengers}</span>
-            </div>
-        </div>
-
-        <div class="pdf-section">
-            <h2>JOURNEY DETAILS</h2>
-            <div class="pdf-row">
-                <span class="pdf-label">Destination:</span>
-                <span class="pdf-value">${destinationMap[booking.destination] || booking.destination}</span>
-            </div>
-            <div class="pdf-row">
-                <span class="pdf-label">Departure Date:</span>
-                <span class="pdf-value">${new Date(booking.date).toLocaleDateString('fr-FR')}</span>
-            </div>
-            <div class="pdf-row">
-                <span class="pdf-label">Departure Time:</span>
-                <span class="pdf-value">${booking.hour}:${booking.minute}</span>
-            </div>
-        </div>
-
-        <div class="pdf-section">
-            <h2>SPECIAL INSTRUCTIONS</h2>
-            <div class="pdf-row">
-                <span class="pdf-label">Reception Notes:</span>
-                <span class="pdf-value">${booking.notes || 'None'}</span>
-            </div>
-        </div>
-
-        <div class="pdf-section">
-            <h2>CONFIRMATION</h2>
-            <div class="pdf-row">
-                <span class="pdf-label">Handled by Receptionist:</span>
-                <span class="pdf-value">${booking.receptionist || 'Not specified'}</span>
-            </div>
-            <div class="pdf-row">
-                <span class="pdf-label">Driver Confirmed:</span>
-                <span class="pdf-value">${booking.driverConfirmed ? 'YES ✓' : 'NO'}</span>
-            </div>
-        </div>
-
-        <div class="pdf-footer">
-            <p>This is an official Citadines Taxi Booking confirmation.</p>
-            <p>Please keep this document for your records.</p>
-            <p>&copy; 2024 Citadines Taxi Booking. All rights reserved.</p>
-        </div>
-    `;
-}
-
-function viewPDF() {
-    if (!lastBooking) {
-        alert('Aucune réservation à afficher');
-        return;
-    }
-
-    const pdfContent = document.getElementById('pdfContent');
-    pdfContent.innerHTML = generatePDFHTML(lastBooking);
-    document.getElementById('pdfModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function downloadPDF() {
-    if (!lastBooking) {
-        alert('Aucune réservation à télécharger');
-        return;
-    }
-
-    const element = document.createElement('div');
-    element.innerHTML = generatePDFHTML(lastBooking);
-    
-    const opt = {
-        margin: 10,
-        filename: `Citadines_Booking_${lastBooking.id}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-    };
-
-    html2pdf().set(opt).from(element).save();
-}
-
-function closePDFModal() {
-    document.getElementById('pdfModal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-function printBooking() {
-    if (!lastBooking) {
-        alert('Aucune réservation à imprimer');
-        return;
-    }
-
-    saveBooking();
-    loadBookings();
-    window.print();
-}
-
-function sendWhatsApp() {
-    const booking = saveBooking();
-    loadBookings();
-    
-    const destinationMap = {
-        'cdg': 'Charles de Gaulle Airport',
-        'orly': 'Orly Airport',
-        'nord': 'Gare du Nord',
-        'lyon': 'Gare de Lyon',
-        'disneyland': 'Disneyland Paris',
-        'beauvais': 'Beauvais'
-    };
-
-    const message = encodeURIComponent(
-        `CITADINES TAXI BOOKING CONFIRMATION\n\n` +
-        `📋 Booking ID: #${booking.id}\n` +
-        `👤 Guest Name: ${booking.guestName || 'Not specified'}\n` +
-        `🚪 Apartment: ${booking.apartment}\n` +
-        `👥 Passengers: ${booking.passengers}\n` +
-        `📍 Destination: ${destinationMap[booking.destination] || booking.destination}\n` +
-        `📅 Date: ${new Date(booking.date).toLocaleDateString('fr-FR')}\n` +
-        `⏰ Time: ${booking.hour}:${booking.minute}\n` +
-        `👔 Receptionist: ${booking.receptionist || 'Not specified'}\n\n` +
-        `Luxury Concierge Service - Citadines`
-    );
-    
-    window.open(`https://wa.me/?text=${message}`, '_blank');
-}
-
-function scrollToBooking() {
-    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
-}
-
-function newBooking() {
-    document.querySelectorAll('input, textarea, select').forEach(el => {
-        if (el.type !== 'checkbox') el.value = '';
-        if (el.type === 'checkbox') el.checked = false;
-    });
-    
-    passengerCount = 2;
-    currentStep = 1;
-    document.getElementById('passengerCount').textContent = '2';
-    document.getElementById('summaryPassengers').textContent = '2';
-    
-    updateFormDisplay();
-    updateStepsIndicator();
-    scrollToBooking();
-}
-
-// Close PDF modal when clicking outside
-document.addEventListener('click', function(event) {
-    const modal = document.getElementById('pdfModal');
-    if (event.target === modal) {
-        closePDFModal();
-    }
-});
+        });
     </script>
 </body>
 </html>

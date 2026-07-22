@@ -1,21 +1,14 @@
-# Citadines Taxi Booking - The Night Shift
+# Sécurité Incendie - Application Web
 
-**Luxury Concierge Taxi Booking Service**
-
-Accédez à l'application : https://samy93450.github.io/taxi-night-shift/
-
-## À Propos
-
-Application web luxe pour la gestion des réservations de taxi pour l'hôtel Citadines Apart'Hotel Paris.
+Application web responsive pensée pour un écran d'iPhone avec un accès rapide à un appel d'urgence.
 
 ## Fonctionnalités
 
-- ✅ Nouvelle Réservation (formulaire multi-étapes)
-- ✅ Mes Réservations (historique local)
-- ✅ Génération PDF
-- ✅ Impressions
-- ✅ Partage Email & WhatsApp
-- ✅ Design Responsive
+- Interface mobile inspirée du visuel fourni
+- Bouton d'appel d'urgence mis en avant
+- Numéro fixe modifiable avant chaque appel
+- Sauvegarde locale du dernier numéro utilisé
+- Compatible avec l'ouverture d'appel via `tel:` sur smartphone
 
 ## Technologies
 
@@ -23,6 +16,9 @@ Application web luxe pour la gestion des réservations de taxi pour l'hôtel Cit
 - CSS3
 - JavaScript (Vanilla)
 
----
+## Utilisation
 
-*Créé avec ❤️ pour Citadines*
+1. Ouvrir l'application dans le navigateur.
+2. Appuyer sur une icône ou un bouton d'appel.
+3. Modifier le numéro si nécessaire.
+4. Valider pour lancer l'appel.
