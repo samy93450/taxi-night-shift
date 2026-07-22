@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Citadines Taxi Booking - Luxury Concierge Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
 * {
     margin: 0;
@@ -12,29 +13,34 @@
 }
 
 :root {
-    --primary-dark: #1a1a1a;
-    --primary-light: #2d2d2d;
-    --accent-gold: #c9a961;
+    --primary-dark: #0f0f0f;
+    --primary-light: #1a1a1a;
+    --accent-gold: #d4af37;
+    --accent-gold-light: #e8d4a0;
     --text-white: #ffffff;
-    --text-gray: #999999;
-    --border-color: #3d3d3d;
+    --text-gray: #b0b0b0;
+    --text-light-gray: #808080;
+    --border-color: #2d2d2d;
     --success-color: #4caf50;
+    --card-bg: #252525;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
     background-color: var(--primary-dark);
     color: var(--text-white);
     line-height: 1.6;
 }
 
+/* ==================== NAVBAR ==================== */
 .navbar {
     background-color: var(--primary-light);
     padding: 1rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--accent-gold);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-container {
@@ -52,169 +58,244 @@ body {
 }
 
 .logo-text {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--text-white);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logo-subtitle {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--accent-gold);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     margin-top: 2px;
+    font-weight: 600;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .nav-link {
     color: var(--text-gray);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     font-size: 0.9rem;
     letter-spacing: 1px;
+    font-weight: 500;
+    position: relative;
 }
 
 .nav-link:hover {
     color: var(--accent-gold);
 }
 
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-gold);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ==================== HERO SECTION ==================== */
 .hero {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
-    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
+    padding: 5rem 2rem;
     text-align: center;
-    min-height: 600px;
+    min-height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .hero-content {
     max-width: 600px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-icon {
+    font-size: 4rem;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    letter-spacing: 3px;
-    margin-bottom: 0.5rem;
+    font-size: 4rem;
+    letter-spacing: 4px;
+    margin-bottom: 0.3rem;
     font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .hero .subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--accent-gold);
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.hero .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    margin: 1rem auto;
 }
 
 .hero h2 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     letter-spacing: 3px;
-    margin-bottom: 0.5rem;
-    font-weight: 300;
+    margin-bottom: 1rem;
+    font-weight: 400;
 }
 
 .hero .tagline {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--accent-gold);
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    font-weight: 300;
 }
 
 .hero .description {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+    color: var(--text-white);
 }
 
 .hero .features {
     color: var(--text-gray);
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: 2px;
+    font-weight: 500;
 }
 
 .btn-primary {
     background-color: var(--primary-dark);
     color: var(--accent-gold);
     border: 2px solid var(--accent-gold);
-    padding: 1rem 2rem;
+    padding: 1.1rem 2.5rem;
     font-size: 0.9rem;
     letter-spacing: 2px;
     cursor: pointer;
     transition: all 0.3s ease;
-    border-radius: 4px;
+    border-radius: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
 .btn-primary:hover {
     background-color: var(--accent-gold);
     color: var(--primary-dark);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
 }
 
+.btn-primary i {
+    margin-right: 0.5rem;
+}
+
+/* ==================== BOOKING SECTION ==================== */
 .booking-section {
     background-color: var(--primary-dark);
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     min-height: 100vh;
 }
 
 .booking-container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     background-color: var(--primary-light);
-    padding: 2rem;
-    border-radius: 8px;
+    padding: 3rem;
+    border-radius: 0;
     border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
 }
 
 .booking-container h2 {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     color: var(--accent-gold);
     letter-spacing: 2px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
+/* Steps Indicator */
 .steps-indicator {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .step {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background-color: var(--primary-dark);
-    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    border: 2px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-gray);
+    color: var(--text-light-gray);
     font-weight: bold;
     transition: all 0.3s ease;
+    font-size: 0.9rem;
 }
 
 .step.active {
     background-color: var(--accent-gold);
     color: var(--primary-dark);
     border-color: var(--accent-gold);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
+/* Form Steps */
 .form-step {
     display: none;
 }
 
 .form-step.active {
     display: block;
-    animation: slideIn 0.3s ease;
+    animation: slideIn 0.4s ease;
 }
 
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(15px);
     }
     to {
         opacity: 1;
@@ -224,34 +305,54 @@ body {
 
 .form-step h3 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: var(--accent-gold);
     letter-spacing: 2px;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-transform: uppercase;
 }
 
+.form-step h3 i {
+    font-size: 1.3rem;
+    color: var(--accent-gold);
+}
+
+/* Form Groups */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     color: var(--text-white);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     letter-spacing: 1px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.8rem;
-    background-color: var(--primary-dark);
+    padding: 0.9rem;
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-white);
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-light-gray);
 }
 
 .form-group input:focus,
@@ -259,6 +360,8 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--accent-gold);
+    background-color: rgba(212, 175, 55, 0.05);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
 }
 
 .form-group textarea {
@@ -266,63 +369,124 @@ body {
     min-height: 100px;
 }
 
+/* Passenger Counter */
 .passenger-counter {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    background-color: var(--primary-dark);
+    gap: 1.5rem;
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 0.5rem;
-    border-radius: 4px;
+    padding: 0.8rem;
+    border-radius: 0;
 }
 
 .counter-btn {
     background-color: transparent;
     border: 1px solid var(--border-color);
     color: var(--accent-gold);
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 1.2rem;
+    border-radius: 0;
+    font-size: 1.3rem;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .counter-btn:hover {
     background-color: var(--accent-gold);
     color: var(--primary-dark);
+    border-color: var(--accent-gold);
 }
 
 #passengerCount {
-    font-size: 1.1rem;
-    min-width: 30px;
+    font-size: 1.2rem;
+    min-width: 40px;
     text-align: center;
+    color: var(--accent-gold);
+    font-weight: 600;
 }
 
+/* Destinations Section */
+.destinations-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.destinations-title {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+}
+
+.destination-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--accent-gold);
+    font-size: 0.8rem;
+}
+
+.destination-item:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+    border-color: var(--accent-gold);
+}
+
+.destination-item i {
+    font-size: 1rem;
+}
+
+/* Time Picker */
 .time-picker {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--primary-dark);
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: 0;
 }
 
 .time-picker select {
     flex: 1;
     border: none;
     background-color: transparent;
-    padding: 0.5rem 0.25rem;
+    padding: 0.5rem;
     color: var(--text-white);
 }
 
+.time-picker span {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+/* Checkbox */
 .checkbox-group {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
     margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -332,62 +496,89 @@ body {
     accent-color: var(--accent-gold);
 }
 
+.checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+    color: var(--text-white);
+    font-size: 0.9rem;
+}
+
+/* Booking Summary */
 .booking-summary {
-    background-color: var(--primary-dark);
-    padding: 1rem;
-    border-radius: 4px;
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 0;
     border: 1px solid var(--border-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .booking-summary h4 {
     color: var(--accent-gold);
     margin-bottom: 1rem;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .summary-item {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 0;
+    padding: 0.7rem 0;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-gray);
+    font-size: 0.9rem;
 }
 
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item span:last-child {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+/* Form Actions */
 .form-actions {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
 .btn-next,
 .btn-back {
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 1.8rem;
     font-size: 0.85rem;
     letter-spacing: 1px;
     cursor: pointer;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .btn-next {
     background-color: var(--primary-dark);
     color: var(--text-white);
-    border: 1px solid var(--text-gray);
+    border: 1px solid var(--border-color);
+    flex: 1;
 }
 
 .btn-next:hover {
     background-color: var(--accent-gold);
     color: var(--primary-dark);
+    border-color: var(--accent-gold);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
 .btn-back {
     background-color: transparent;
     color: var(--accent-gold);
     border: 1px solid var(--accent-gold);
+    flex: 1;
 }
 
 .btn-back:hover {
@@ -399,38 +590,46 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
     background-color: var(--primary-light);
     border: 1px solid var(--border-color);
     color: var(--accent-gold);
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 1.2rem;
+    border-radius: 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     letter-spacing: 1px;
-    min-width: 120px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .btn-action:hover {
     border-color: var(--accent-gold);
-    background-color: rgba(201, 169, 97, 0.1);
+    background-color: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
+.btn-action i {
+    font-size: 1.8rem;
+}
+
+/* Success Message */
 .success-message {
     text-align: center;
 }
 
 .success-icon {
-    font-size: 3rem;
+    font-size: 4rem;
     color: var(--success-color);
     margin-bottom: 1rem;
 }
 
 .success-message p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 2rem;
     color: var(--success-color);
+    font-weight: 600;
 }
 
 .booking-actions {
@@ -440,9 +639,10 @@ body {
     margin-bottom: 2rem;
 }
 
+/* ==================== MY BOOKINGS SECTION ==================== */
 .my-bookings-section {
     background-color: var(--primary-dark);
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     min-height: 500px;
 }
 
@@ -453,10 +653,12 @@ body {
 
 .bookings-container h2 {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     color: var(--accent-gold);
     letter-spacing: 2px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .bookings-list {
@@ -466,30 +668,47 @@ body {
 
 .booking-card {
     background-color: var(--primary-light);
-    padding: 1.5rem;
-    border-radius: 8px;
+    padding: 1.8rem;
+    border-radius: 0;
     border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.booking-card:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
 }
 
 .booking-card h3 {
     color: var(--accent-gold);
     margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .booking-card p {
     margin-bottom: 0.5rem;
     color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.booking-card strong {
+    color: var(--text-white);
 }
 
 .no-bookings {
     text-align: center;
-    color: var(--text-gray);
+    color: var(--text-light-gray);
     padding: 3rem;
+    font-size: 1rem;
 }
 
+/* ==================== CONTACT SECTION ==================== */
 .contact-section {
     background-color: var(--primary-light);
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
+    border-top: 2px solid var(--accent-gold);
 }
 
 .contact-container {
@@ -502,13 +721,27 @@ body {
     color: var(--accent-gold);
     margin-bottom: 2rem;
     letter-spacing: 2px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .contact-info p {
     margin-bottom: 1rem;
     color: var(--text-gray);
+    font-size: 0.95rem;
 }
 
+.contact-info strong {
+    color: var(--text-white);
+}
+
+.contact-info i {
+    color: var(--accent-gold);
+    margin-right: 0.5rem;
+}
+
+/* ==================== FOOTER ==================== */
 .footer {
     background-color: var(--primary-dark);
     padding: 2rem;
@@ -521,24 +754,72 @@ body {
     font-size: 0.85rem;
 }
 
+.footer p:first-child {
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+/* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.5rem;
     }
+
     .hero h2 {
         font-size: 1.8rem;
     }
+
     .nav-menu {
         gap: 1rem;
         font-size: 0.8rem;
     }
+
     .booking-actions {
         grid-template-columns: 1fr;
     }
+
     .form-actions {
         flex-direction: column;
     }
-    .btn-next, .btn-back {
+
+    .destinations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 2rem 1rem;
+        min-height: 500px;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero h2 {
+        font-size: 1.3rem;
+    }
+
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .navbar-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .booking-container {
+        padding: 1.5rem;
+    }
+
+    .btn-primary {
         width: 100%;
     }
 }
@@ -550,7 +831,7 @@ body {
         <div class="navbar-container">
             <div class="logo">
                 <span class="logo-text">CITADINES</span>
-                <span class="logo-subtitle">TAXI BOOKING</span>
+                <span class="logo-subtitle">APART'HOTEL PARIS</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Accueil</a></li>
@@ -564,20 +845,24 @@ body {
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fas fa-building"></i>
+            </div>
             <h1>CITADINES</h1>
             <p class="subtitle">APART'HOTEL PARIS</p>
+            <div class="divider"></div>
             <h2>TAXI BOOKING</h2>
             <p class="tagline">Luxury Concierge Service</p>
             <p class="description">Book a taxi for your guests</p>
             <p class="features">Fast • Reliable • Premium Service</p>
-            <button class="btn-primary" onclick="scrollToBooking()">+ NEW BOOKING</button>
+            <button class="btn-primary" onclick="scrollToBooking()"><i class="fas fa-plus"></i> NEW BOOKING</button>
         </div>
     </section>
 
     <!-- Booking Section -->
     <section id="booking" class="booking-section">
         <div class="booking-container">
-            <h2>NOUVELLE RÉSERVATION</h2>
+            <h2><i class="fas fa-calendar-check"></i> NOUVELLE RÉSERVATION</h2>
             
             <!-- Steps Indicator -->
             <div class="steps-indicator">
@@ -590,18 +875,18 @@ body {
 
             <!-- Step 1: Guest Information -->
             <div class="form-step active" id="form-step-1">
-                <h3>INFORMATIONS CLIENT</h3>
+                <h3><i class="fas fa-user"></i> INFORMATIONS CLIENT</h3>
                 <form>
                     <div class="form-group">
-                        <label>Numéro d'Appartement</label>
+                        <label><i class="fas fa-door-open"></i> Numéro d'Appartement</label>
                         <input type="text" placeholder="ex. 502" id="apartmentNumber">
                     </div>
                     <div class="form-group">
-                        <label>Nom de l'invité (Optionnel)</label>
+                        <label><i class="fas fa-user-circle"></i> Nom de l'invité (Optionnel)</label>
                         <input type="text" placeholder="ex. John Smith" id="guestName">
                     </div>
                     <div class="form-group">
-                        <label>Nombre de Passagers</label>
+                        <label><i class="fas fa-users"></i> Nombre de Passagers</label>
                         <div class="passenger-counter">
                             <button type="button" class="counter-btn" onclick="decrementPassengers()">−</button>
                             <span id="passengerCount">2</span>
@@ -609,18 +894,18 @@ body {
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </form>
             </div>
 
             <!-- Step 2: Journey Details -->
             <div class="form-step" id="form-step-2">
-                <h3>DÉTAILS DU TRAJET</h3>
+                <h3><i class="fas fa-map-marker-alt"></i> DÉTAILS DU TRAJET</h3>
                 <form>
                     <div class="form-group">
                         <label>Destination</label>
-                        <select id="destination">
+                        <select id="destination" onchange="updateDestinations()">
                             <option value="">Sélectionner une destination</option>
                             <option value="cdg">Charles de Gaulle Airport</option>
                             <option value="orly">Orly Airport</option>
@@ -630,20 +915,51 @@ body {
                             <option value="defense">La Défense</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Date de Départ</label>
+
+                    <div class="destinations-section">
+                        <div class="destinations-title">Destinations Populaires</div>
+                        <div class="destinations-grid">
+                            <div class="destination-item" onclick="selectDestination('cdg')">
+                                <span><i class="fas fa-plane"></i> Charles de Gaulle</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('orly')">
+                                <span><i class="fas fa-plane"></i> Orly</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('nord')">
+                                <span><i class="fas fa-train"></i> Gare du Nord</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('lyon')">
+                                <span><i class="fas fa-train"></i> Gare de Lyon</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('disneyland')">
+                                <span><i class="fas fa-crown"></i> Disneyland</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('defense')">
+                                <span><i class="fas fa-building"></i> La Défense</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label><i class="fas fa-calendar"></i> Date de Départ</label>
                         <input type="date" id="departureDate">
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="previousStep()">< BACK</button>
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                        <button type="button" class="btn-back" onclick="previousStep()"><i class="fas fa-chevron-left"></i> BACK</button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </form>
             </div>
 
             <!-- Step 3: Departure Details -->
             <div class="form-step" id="form-step-3">
-                <h3>DÉTAILS DE DÉPART</h3>
+                <h3><i class="fas fa-clock"></i> DÉTAILS DE DÉPART</h3>
                 <form>
                     <div class="form-group">
                         <label>Heure de Départ</label>
@@ -686,83 +1002,83 @@ body {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Notes de Réception (Optionnel)</label>
-                        <textarea placeholder="Instructions spéciales..." id="receptionNotes"></textarea>
+                        <label><i class="fas fa-sticky-note"></i> Notes de Réception (Optionnel)</label>
+                        <textarea placeholder="Toute instruction spéciale, détails de vol, point de rendez-vous..." id="receptionNotes"></textarea>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="previousStep()">< BACK</button>
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                        <button type="button" class="btn-back" onclick="previousStep()"><i class="fas fa-chevron-left"></i> BACK</button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </form>
             </div>
 
             <!-- Step 4: Confirmation -->
             <div class="form-step" id="form-step-4">
-                <h3>CONFIRMATION</h3>
+                <h3><i class="fas fa-check-circle"></i> CONFIRMATION</h3>
                 <form>
                     <div class="form-group">
-                        <label>Géré par Réceptionniste</label>
+                        <label><i class="fas fa-user-tie"></i> Géré par Réceptionniste</label>
                         <input type="text" placeholder="Votre nom" id="receptionistName">
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="driverConfirmed">
-                        <label for="driverConfirmed">Oui, le chauffeur a été confirmé</label>
+                        <label for="driverConfirmed"><i class="fas fa-car"></i> Oui, le chauffeur a été confirmé</label>
                     </div>
                     
                     <div class="booking-summary">
-                        <h4>RÉSUMÉ DE LA RÉSERVATION</h4>
+                        <h4><i class="fas fa-receipt"></i> RÉSUMÉ DE LA RÉSERVATION</h4>
                         <div class="summary-item">
-                            <span>Passagers</span>
+                            <span><i class="fas fa-users"></i> Passagers</span>
                             <span id="summaryPassengers">2</span>
                         </div>
                         <div class="summary-item">
-                            <span>Destination</span>
+                            <span><i class="fas fa-map-pin"></i> Destination</span>
                             <span id="summaryDestination">-</span>
                         </div>
                         <div class="summary-item">
-                            <span>Date</span>
+                            <span><i class="fas fa-calendar"></i> Date</span>
                             <span id="summaryDate">-</span>
                         </div>
                         <div class="summary-item">
-                            <span>Heure</span>
+                            <span><i class="fas fa-clock"></i> Heure</span>
                             <span id="summaryTime">-</span>
                         </div>
                     </div>
                     
                     <div class="form-actions">
-                        <button type="button" class="btn-back" onclick="previousStep()">< BACK</button>
-                        <button type="button" class="btn-next" onclick="nextStep()">NEXT ></button>
+                        <button type="button" class="btn-back" onclick="previousStep()"><i class="fas fa-chevron-left"></i> BACK</button>
+                        <button type="button" class="btn-next" onclick="nextStep()">NEXT <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </form>
             </div>
 
             <!-- Step 5: Completion -->
             <div class="form-step" id="form-step-5">
-                <h3>RÉSERVATION CONFIRMÉE</h3>
+                <h3><i class="fas fa-check"></i> RÉSERVATION CONFIRMÉE</h3>
                 <div class="success-message">
-                    <div class="success-icon">✓</div>
+                    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
                     <p>Votre réservation a été enregistrée avec succès!</p>
                     
                     <div class="booking-actions">
                         <button type="button" class="btn-action" onclick="generatePDF()">
-                            <span>📄</span>
+                            <i class="fas fa-file-pdf"></i>
                             GÉNÉRER PDF
                         </button>
                         <button type="button" class="btn-action" onclick="printBooking()">
-                            <span>🖨️</span>
+                            <i class="fas fa-print"></i>
                             IMPRIMER
                         </button>
                         <button type="button" class="btn-action" onclick="sendEmail()">
-                            <span>✉️</span>
-                            EMAIL
+                            <i class="fas fa-envelope"></i>
+                            ENVOYER PAR EMAIL
                         </button>
                         <button type="button" class="btn-action" onclick="sendWhatsApp()">
-                            <span>💬</span>
+                            <i class="fas fa-whatsapp"></i>
                             WHATSAPP
                         </button>
                     </div>
 
-                    <button type="button" class="btn-primary" onclick="newBooking()">+ NOUVELLE RÉSERVATION</button>
+                    <button type="button" class="btn-primary" onclick="newBooking()"><i class="fas fa-plus"></i> NOUVELLE RÉSERVATION</button>
                 </div>
             </div>
         </div>
@@ -771,9 +1087,9 @@ body {
     <!-- My Bookings Section -->
     <section id="mybookings" class="my-bookings-section">
         <div class="bookings-container">
-            <h2>MES RÉSERVATIONS</h2>
+            <h2><i class="fas fa-history"></i> MES RÉSERVATIONS</h2>
             <div id="bookingsList" class="bookings-list">
-                <p class="no-bookings">Aucune réservation pour le moment</p>
+                <p class="no-bookings"><i class="fas fa-inbox"></i> Aucune réservation pour le moment</p>
             </div>
         </div>
     </section>
@@ -781,12 +1097,12 @@ body {
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="contact-container">
-            <h2>CONTACT</h2>
+            <h2><i class="fas fa-phone-alt"></i> CONTACT</h2>
             <div class="contact-info">
-                <p><strong>Citadines Apart'Hotel Paris</strong></p>
-                <p>📞 +33 1 XX XX XX XX</p>
-                <p>📧 taxi@citadines.fr</p>
-                <p>💬 WhatsApp: +33 6 XX XX XX XX</p>
+                <p><strong><i class="fas fa-building"></i> Citadines Apart'Hotel Paris</strong></p>
+                <p><i class="fas fa-phone"></i> +33 1 XX XX XX XX</p>
+                <p><i class="fas fa-envelope"></i> taxi@citadines.fr</p>
+                <p><i class="fas fa-comment-dots"></i> WhatsApp: +33 6 XX XX XX XX</p>
             </div>
         </div>
     </section>
@@ -829,6 +1145,15 @@ function decrementPassengers() {
         document.getElementById('passengerCount').textContent = passengerCount;
         document.getElementById('summaryPassengers').textContent = passengerCount;
     }
+}
+
+function selectDestination(dest) {
+    document.getElementById('destination').value = dest;
+    updateDestinations();
+}
+
+function updateDestinations() {
+    // Visual feedback for selected destination
 }
 
 function nextStep() {
@@ -959,7 +1284,7 @@ function loadBookings() {
     const bookingsList = document.getElementById('bookingsList');
     
     if (bookings.length === 0) {
-        bookingsList.innerHTML = '<p class="no-bookings">Aucune réservation pour le moment</p>';
+        bookingsList.innerHTML = '<p class="no-bookings"><i class="fas fa-inbox"></i> Aucune réservation pour le moment</p>';
         return;
     }
 
@@ -978,15 +1303,15 @@ function loadBookings() {
         };
 
         card.innerHTML = `
-            <h3>Réservation #${booking.id}</h3>
-            <p><strong>Appartement:</strong> ${booking.apartment}</p>
-            <p><strong>Destination:</strong> ${destinationMap[booking.destination] || booking.destination}</p>
-            <p><strong>Date:</strong> ${new Date(booking.date).toLocaleDateString('fr-FR')}</p>
-            <p><strong>Heure:</strong> ${booking.hour}:${booking.minute}</p>
-            <p><strong>Passagers:</strong> ${booking.passengers}</p>
-            <p><strong>Réceptionniste:</strong> ${booking.receptionist || '-'}</p>
-            <p><strong>Confirmée:</strong> ${booking.driverConfirmed ? 'Oui ✓' : 'Non'}</p>
-            <p><small style="color: #999;">Créée le: ${booking.timestamp}</small></p>
+            <h3><i class="fas fa-ticket-alt"></i> Réservation #${booking.id}</h3>
+            <p><strong><i class="fas fa-door-open"></i> Appartement:</strong> ${booking.apartment}</p>
+            <p><strong><i class="fas fa-map-pin"></i> Destination:</strong> ${destinationMap[booking.destination] || booking.destination}</p>
+            <p><strong><i class="fas fa-calendar"></i> Date:</strong> ${new Date(booking.date).toLocaleDateString('fr-FR')}</p>
+            <p><strong><i class="fas fa-clock"></i> Heure:</strong> ${booking.hour}:${booking.minute}</p>
+            <p><strong><i class="fas fa-users"></i> Passagers:</strong> ${booking.passengers}</p>
+            <p><strong><i class="fas fa-user-tie"></i> Réceptionniste:</strong> ${booking.receptionist || '-'}</p>
+            <p><strong><i class="fas fa-check"></i> Confirmée:</strong> ${booking.driverConfirmed ? 'Oui ✓' : 'Non'}</p>
+            <p><small style="color: #808080;"><i class="fas fa-info-circle"></i> Créée le: ${booking.timestamp}</small></p>
         `;
         
         bookingsList.appendChild(card);
@@ -999,21 +1324,25 @@ function scrollToBooking() {
 
 function generatePDF() {
     const booking = saveBooking();
+    loadBookings();
     alert('📄 PDF généré avec succès!\n\nRéservation #' + booking.id);
 }
 
 function printBooking() {
     const booking = saveBooking();
+    loadBookings();
     window.print();
 }
 
 function sendEmail() {
     const booking = saveBooking();
+    loadBookings();
     alert('✉️ Email envoyé avec succès!');
 }
 
 function sendWhatsApp() {
     const booking = saveBooking();
+    loadBookings();
     const message = encodeURIComponent(`Réservation Citadines Taxi\nAppartement: ${booking.apartment}\nDestination: ${booking.destination}\nDate: ${booking.date}\nHeure: ${booking.hour}:${booking.minute}`);
     window.open(`https://wa.me/?text=${message}`, '_blank');
 }
