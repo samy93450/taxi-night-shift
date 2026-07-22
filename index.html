@@ -1677,7 +1677,7 @@ body {
             <h2><i class="fas fa-history"></i> MES RÉSERVATIONS</h2>
             <div class="bookings-toolbar">
                 <div class="booking-counter-panel">
-                    <span class="booking-counter-label">Prochaine réservation</span>
+                    <span class="booking-counter-label">Prochaine Réservation</span>
                     <span class="booking-counter-value" id="nextBookingNumber">#1</span>
                     <p class="booking-helper-text" id="historyPersistenceStatus">Historique local activé.</p>
                 </div>
@@ -1720,6 +1720,7 @@ body {
         bookingCounter: 'citadinesTaxi.bookingCounter',
         historyEnabled: 'citadinesTaxi.historyEnabled'
     };
+    const FINAL_STEP = 5;
 
     let currentStep = 1;
     let passengerCount = 2;
@@ -1810,7 +1811,7 @@ function normalizeBookings(storedBookings) {
 
     return storedBookings.map(function(booking) {
         const normalizedBooking = Object.assign({}, booking);
-        const parsedBookingNumber = Number.parseInt(normalizedBooking.bookingNumber, 10);
+        const parsedBookingNumber = parseInt(normalizedBooking.bookingNumber, 10);
 
         if (Number.isInteger(parsedBookingNumber) && parsedBookingNumber > 0) {
             normalizedBooking.bookingNumber = parsedBookingNumber;
@@ -1825,9 +1826,9 @@ function normalizeBookings(storedBookings) {
 }
 
 function getInitialBookingCounter(existingBookings) {
-    const storedCounter = Number.parseInt(getStorageItem(STORAGE_KEYS.bookingCounter), 10);
+    const storedCounter = parseInt(getStorageItem(STORAGE_KEYS.bookingCounter), 10);
     const derivedCounter = existingBookings.reduce(function(maxCounter, booking) {
-        const bookingNumber = Number.parseInt(booking.bookingNumber, 10);
+        const bookingNumber = parseInt(booking.bookingNumber, 10);
         return Number.isInteger(bookingNumber) ? Math.max(maxCounter, bookingNumber) : maxCounter;
     }, 0) + 1;
 
@@ -1855,7 +1856,7 @@ function clearPersistedBookings() {
 }
 
 function getBookingDisplayId(booking) {
-    const bookingNumber = Number.parseInt(booking.bookingNumber, 10);
+    const bookingNumber = parseInt(booking.bookingNumber, 10);
     return Number.isInteger(bookingNumber) && bookingNumber > 0 ? bookingNumber : booking.id;
 }
 
@@ -1895,7 +1896,7 @@ function bindBookingFormListeners() {
 }
 
 function markBookingAsDirty() {
-    if (currentStep < 5) {
+    if (currentStep < FINAL_STEP) {
         lastBooking = null;
     }
 }
@@ -1939,11 +1940,11 @@ function updateDestinations() {
 
 function nextStep() {
     if (validateStep(currentStep)) {
-        if (currentStep === 4) {
+        if (currentStep === FINAL_STEP - 1) {
             saveBooking();
         }
 
-        if (currentStep < 5) {
+        if (currentStep < FINAL_STEP) {
             currentStep++;
             updateFormDisplay();
             updateStepsIndicator();
@@ -1960,7 +1961,7 @@ function previousStep() {
 }
 
 function updateFormDisplay() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= FINAL_STEP; i++) {
         document.getElementById(`form-step-${i}`).classList.remove('active');
     }
     document.getElementById(`form-step-${currentStep}`).classList.add('active');
@@ -1968,7 +1969,7 @@ function updateFormDisplay() {
 }
 
 function updateStepsIndicator() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= FINAL_STEP; i++) {
         const step = document.getElementById(`step${i}`);
         if (i <= currentStep) {
             step.classList.add('active');
