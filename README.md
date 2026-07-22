@@ -1,4 +1,4 @@
-# Sécurité Incendie - Application Web
+# Sécurité Incendie Citadines - Application Web
 
 > ⚠️ Le numéro affiché par défaut est un exemple. Il doit être remplacé par le vrai numéro à contacter avant toute mise en production ou utilisation réelle.
 
