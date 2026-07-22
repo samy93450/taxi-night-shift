@@ -793,6 +793,73 @@ body {
     font-size: 1rem;
 }
 
+/* PDF actions on booking cards */
+.card-pdf-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-card-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 0.45rem 0.9rem;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: 'Times New Roman', 'Georgia', serif;
+    letter-spacing: 0.5px;
+}
+
+.btn-card-pdf:hover {
+    background-color: rgba(212, 175, 55, 0.15);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+
+/* PDF Modal toolbar */
+.pdf-modal-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+}
+
+.pdf-modal-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: 'Times New Roman', 'Georgia', serif;
+    letter-spacing: 0.5px;
+}
+
+.pdf-modal-action-btn:hover {
+    background-color: rgba(212, 175, 55, 0.15);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+
 /* Delete All Button */
 .delete-all-section {
     text-align: center;
@@ -1305,6 +1372,10 @@ body {
     .pdf-close-btn {
         display: none;
     }
+
+    .pdf-modal-toolbar {
+        display: none;
+    }
 }
     </style>
 </head>
@@ -1612,7 +1683,11 @@ body {
 
     <!-- PDF Modal -->
     <div class="pdf-modal" id="pdfModal">
-        <button class="pdf-close-btn" onclick="closePDFModal()"><i class="fas fa-times"></i> Fermer</button>
+        <div class="pdf-modal-toolbar">
+            <button class="pdf-close-btn" onclick="closePDFModal()"><i class="fas fa-times"></i> Fermer</button>
+            <button class="pdf-modal-action-btn" onclick="downloadCurrentPDF()"><i class="fas fa-download"></i> Télécharger</button>
+            <button class="pdf-modal-action-btn" onclick="printCurrentPDF()"><i class="fas fa-print"></i> Imprimer</button>
+        </div>
         <div class="pdf-content" id="pdfContent">
             <!-- PDF content will be generated here -->
         </div>
@@ -1623,6 +1698,7 @@ let currentStep = 1;
 let passengerCount = 2;
 let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
 let lastBooking = null;
+let currentPDFBooking = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     setMinDate();
@@ -1665,6 +1741,10 @@ function updateDestinations() {
 function nextStep() {
     if (validateStep(currentStep)) {
         if (currentStep < 5) {
+            if (currentStep === 4) {
+                saveBooking();
+                loadBookings();
+            }
             currentStep++;
             updateFormDisplay();
             updateStepsIndicator();
@@ -1863,6 +1943,11 @@ function loadBookings() {
             <p><strong><i class="fas fa-user-tie"></i> Réceptionniste:</strong> ${booking.receptionist || '-'}</p>
             <p><strong><i class="fas fa-check"></i> Confirmée:</strong> ${booking.driverConfirmed ? 'Oui ✓' : 'Non'}</p>
             <p><small style="color: #808080;"><i class="fas fa-info-circle"></i> Créée le: ${booking.timestamp}</small></p>
+            <div class="card-pdf-actions">
+                <button type="button" class="btn-card-pdf" onclick="viewBookingPDF(${booking.id})" aria-label="Voir le PDF de la réservation ${booking.id}"><i class="fas fa-file-pdf"></i> Voir PDF</button>
+                <button type="button" class="btn-card-pdf" onclick="downloadBookingPDF(${booking.id})" aria-label="Télécharger le PDF de la réservation ${booking.id}"><i class="fas fa-download"></i> Télécharger</button>
+                <button type="button" class="btn-card-pdf" onclick="printBookingPDF(${booking.id})" aria-label="Imprimer la réservation ${booking.id}"><i class="fas fa-print"></i> Imprimer</button>
+            </div>
         `;
         
         bookingsList.appendChild(card);
@@ -1959,30 +2044,33 @@ function generatePDFHTML(booking) {
     `;
 }
 
-function viewPDF() {
-    if (!lastBooking) {
+function viewPDF(booking) {
+    const b = booking || lastBooking;
+    if (!b) {
         alert('Aucune réservation à afficher');
         return;
     }
 
+    currentPDFBooking = b;
     const pdfContent = document.getElementById('pdfContent');
-    pdfContent.innerHTML = generatePDFHTML(lastBooking);
+    pdfContent.innerHTML = generatePDFHTML(b);
     document.getElementById('pdfModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
-function downloadPDF() {
-    if (!lastBooking) {
+function downloadPDF(booking) {
+    const b = booking || lastBooking;
+    if (!b) {
         alert('Aucune réservation à télécharger');
         return;
     }
 
     const element = document.createElement('div');
-    element.innerHTML = generatePDFHTML(lastBooking);
+    element.innerHTML = generatePDFHTML(b);
     
     const opt = {
         margin: 10,
-        filename: `Citadines_Booking_${lastBooking.id}.pdf`,
+        filename: `Citadines_Booking_${b.id}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
@@ -1991,25 +2079,72 @@ function downloadPDF() {
     html2pdf().set(opt).from(element).save();
 }
 
+function downloadCurrentPDF() {
+    downloadPDF(currentPDFBooking);
+}
+
+function printCurrentPDF() {
+    window.print();
+}
+
 function closePDFModal() {
     document.getElementById('pdfModal').classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
-function printBooking() {
-    if (!lastBooking) {
+function printBooking(booking) {
+    const b = booking || lastBooking;
+    if (!b) {
         alert('Aucune réservation à imprimer');
         return;
     }
 
-    saveBooking();
-    loadBookings();
-    window.print();
+    currentPDFBooking = b;
+    const pdfContent = document.getElementById('pdfContent');
+    pdfContent.innerHTML = generatePDFHTML(b);
+    document.getElementById('pdfModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Delay to allow the modal to render before the print dialog opens
+    setTimeout(function() { window.print(); }, 300);
+}
+
+function findBookingById(id) {
+    return bookings.find(function(b) { return b.id === Number(id); }) || null;
+}
+
+function viewBookingPDF(id) {
+    const b = findBookingById(id);
+    if (!b) {
+        alert('Réservation introuvable');
+        return;
+    }
+    viewPDF(b);
+}
+
+function downloadBookingPDF(id) {
+    const b = findBookingById(id);
+    if (!b) {
+        alert('Réservation introuvable');
+        return;
+    }
+    downloadPDF(b);
+}
+
+function printBookingPDF(id) {
+    const b = findBookingById(id);
+    if (!b) {
+        alert('Réservation introuvable');
+        return;
+    }
+    printBooking(b);
 }
 
 function sendWhatsApp() {
-    const booking = saveBooking();
-    loadBookings();
+    const booking = lastBooking;
+    if (!booking) {
+        alert('Aucune réservation à partager');
+        return;
+    }
     
     const destinationMap = {
         'cdg': 'Charles de Gaulle Airport',
