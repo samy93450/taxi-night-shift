@@ -1677,7 +1677,7 @@ body {
             <h2><i class="fas fa-history"></i> MES RÉSERVATIONS</h2>
             <div class="bookings-toolbar">
                 <div class="booking-counter-panel">
-                    <span class="booking-counter-label">Prochaine Réservation</span>
+                    <span class="booking-counter-label">Prochaine réservation</span>
                     <span class="booking-counter-value" id="nextBookingNumber">#1</span>
                     <p class="booking-helper-text" id="historyPersistenceStatus">Historique local activé.</p>
                 </div>
@@ -1753,7 +1753,7 @@ function getStorageItem(key) {
     try {
         return window.localStorage.getItem(key);
     } catch (error) {
-        console.warn('LocalStorage indisponible pour la clé:', key, error);
+        console.warn('LocalStorage indisponible pour la clé:', key, 'Les réservations ne seront pas sauvegardées.', error);
         return null;
     }
 }
@@ -1792,7 +1792,7 @@ function parseStoredBookings(rawValue) {
             return booking && typeof booking === 'object';
         }) : [];
     } catch (error) {
-        console.warn('Historique local invalide, restauration ignorée. L\'historique sera réinitialisé.', error);
+        console.warn('Historique local invalide, restauration ignorée. Démarrage avec un historique vide.', error);
         return [];
     }
 }
@@ -1903,7 +1903,7 @@ function markBookingAsDirty() {
 
 function toggleHistoryPersistence() {
     const toggleElement = document.getElementById('persistHistoryToggle');
-    historyPersistenceEnabled = !!(toggleElement && toggleElement.checked);
+    historyPersistenceEnabled = toggleElement ? toggleElement.checked : false;
     setStorageItem(STORAGE_KEYS.historyEnabled, historyPersistenceEnabled ? 'true' : 'false');
 
     if (historyPersistenceEnabled) {
@@ -2110,7 +2110,7 @@ function deleteAllBookings() {
 }
 
 function resetBookingCounter() {
-    if (!confirm('Réinitialiser le compteur de réservation ? Les prochaines réservations repartiront de #1. Attention : les réservations existantes conserveront leurs numéros actuels.')) {
+    if (!confirm('Réinitialiser le compteur de réservation ?\nLes prochaines réservations repartiront de #1.\nLes réservations existantes garderont leur numéro actuel.')) {
         return;
     }
 
