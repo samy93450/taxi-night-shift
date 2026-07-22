@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Citadines Taxi Booking - Luxury Concierge Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
 * {
     margin: 0;
@@ -762,6 +763,116 @@ body {
     transform: translateY(-2px);
 }
 
+/* ==================== PDF Modal ==================== */
+.pdf-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.pdf-modal.active {
+    display: block;
+}
+
+.pdf-content {
+    background-color: var(--text-white);
+    color: var(--primary-dark);
+    padding: 2rem;
+    margin: 1rem auto;
+    max-width: 600px;
+    min-height: 800px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.pdf-header {
+    text-align: center;
+    border-bottom: 3px solid var(--accent-gold);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.pdf-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 2px;
+}
+
+.pdf-header p {
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin: 0.3rem 0;
+}
+
+.pdf-section {
+    margin-bottom: 2rem;
+}
+
+.pdf-section h2 {
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.pdf-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.pdf-row:last-child {
+    border-bottom: none;
+}
+
+.pdf-label {
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+.pdf-value {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.pdf-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+    color: var(--text-light-gray);
+    font-size: 0.85rem;
+}
+
+.pdf-close-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--danger-color);
+    color: var(--text-white);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: 600;
+    z-index: 1001;
+    font-family: 'Times New Roman', 'Georgia', serif;
+}
+
+.pdf-close-btn:hover {
+    background-color: #ff5252;
+}
+
 /* ==================== FOOTER ==================== */
 .footer {
     background-color: var(--primary-dark);
@@ -780,7 +891,7 @@ body {
     font-weight: 600;
 }
 
-/* ==================== RESPONSIVE ==================== */
+/* ==================== RESPONSIVE - TABLET ==================== */
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.5rem;
@@ -816,9 +927,23 @@ body {
         margin-top: 1rem;
         width: 100%;
     }
+
+    .pdf-content {
+        padding: 1.5rem;
+        min-height: auto;
+    }
 }
 
+/* ==================== RESPONSIVE - MOBILE/iPhone ==================== */
 @media (max-width: 480px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
     .hero {
         padding: 2rem 1rem;
         min-height: 500px;
@@ -826,10 +951,17 @@ body {
 
     .hero h1 {
         font-size: 1.8rem;
+        letter-spacing: 2px;
     }
 
     .hero h2 {
         font-size: 1.3rem;
+        letter-spacing: 2px;
+    }
+
+    .hero-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
     }
 
     .navbar {
@@ -838,20 +970,285 @@ body {
 
     .navbar-container {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.8rem;
+    }
+
+    .logo-text {
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+    }
+
+    .logo-subtitle {
+        font-size: 0.6rem;
     }
 
     .nav-menu {
         flex-direction: column;
         gap: 0.5rem;
+        width: 100%;
+    }
+
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 0.5rem 0;
+    }
+
+    .booking-section {
+        padding: 2rem 1rem;
     }
 
     .booking-container {
         padding: 1.5rem;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .booking-container h2 {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .steps-indicator {
+        margin-bottom: 1.5rem;
+    }
+
+    .step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .form-step h3 {
+        font-size: 0.9rem;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-step h3 i {
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        font-size: 0.75rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.75rem;
+        font-size: 16px;
+    }
+
+    .passenger-counter {
+        gap: 1rem;
+        padding: 0.6rem;
+    }
+
+    .counter-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1rem;
+    }
+
+    #passengerCount {
+        font-size: 1rem;
+    }
+
+    .destinations-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .destination-item {
+        padding: 0.7rem;
+        font-size: 0.75rem;
+    }
+
+    .time-picker {
+        padding: 0.4rem;
+    }
+
+    .time-picker select {
+        padding: 0.4rem 0.2rem;
+        font-size: 14px;
+    }
+
+    .checkbox-group {
+        padding: 0.6rem;
+        gap: 0.6rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .checkbox-group label {
+        font-size: 0.85rem;
+    }
+
+    .booking-summary {
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .booking-summary h4 {
+        font-size: 0.75rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .summary-item {
+        font-size: 0.8rem;
+        padding: 0.5rem 0;
+    }
+
+    .form-actions {
+        gap: 0.6rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn-next,
+    .btn-back {
+        padding: 0.7rem 1rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-action {
+        padding: 0.8rem;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .btn-action i {
+        font-size: 1.5rem;
+    }
+
+    .booking-actions {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
     }
 
     .btn-primary {
-        width: 100%;
+        padding: 0.9rem 1.5rem;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .my-bookings-section {
+        padding: 2rem 1rem;
+    }
+
+    .bookings-container h2 {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .booking-card {
+        padding: 1.2rem;
+    }
+
+    .booking-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .booking-card p {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .btn-delete {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .btn-delete-all {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.75rem;
+    }
+
+    .no-bookings {
+        padding: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .delete-all-section {
+        margin-top: 1.5rem;
+    }
+
+    .footer {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer p {
+        font-size: 0.75rem;
+    }
+
+    /* PDF Modal Mobile */
+    .pdf-modal {
+        padding: 0;
+    }
+
+    .pdf-content {
+        padding: 1rem;
+        max-width: 100%;
+        margin: 3rem 0.5rem 1rem;
+        min-height: auto;
+    }
+
+    .pdf-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .pdf-header p {
+        font-size: 0.8rem;
+    }
+
+    .pdf-section h2 {
+        font-size: 1rem;
+    }
+
+    .pdf-row {
+        font-size: 0.85rem;
+        padding: 0.6rem 0;
+    }
+
+    .pdf-close-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* ==================== PRINT STYLES ==================== */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .navbar, .booking-section, .my-bookings-section, .footer {
+        display: none;
+    }
+
+    .pdf-modal {
+        position: static;
+        background-color: white;
+    }
+
+    .pdf-content {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pdf-close-btn {
+        display: none;
     }
 }
     </style>
@@ -942,7 +1339,7 @@ body {
                             <option value="nord">Gare du Nord</option>
                             <option value="lyon">Gare de Lyon</option>
                             <option value="disneyland">Disneyland Paris</option>
-                            <option value="defense">La Défense</option>
+                            <option value="beauvais">Beauvais</option>
                         </select>
                     </div>
 
@@ -969,8 +1366,8 @@ body {
                                 <span><i class="fas fa-crown"></i> Disneyland</span>
                                 <i class="fas fa-chevron-right"></i>
                             </div>
-                            <div class="destination-item" onclick="selectDestination('defense')">
-                                <span><i class="fas fa-building"></i> La Défense</span>
+                            <div class="destination-item" onclick="selectDestination('beauvais')">
+                                <span><i class="fas fa-plane"></i> Beauvais</span>
                                 <i class="fas fa-chevron-right"></i>
                             </div>
                         </div>
@@ -1090,17 +1487,17 @@ body {
                     <p>Votre réservation a été enregistrée avec succès!</p>
                     
                     <div class="booking-actions">
-                        <button type="button" class="btn-action" onclick="generatePDF()">
+                        <button type="button" class="btn-action" onclick="viewPDF()">
                             <i class="fas fa-file-pdf"></i>
-                            GÉNÉRER PDF
+                            VOIR PDF
+                        </button>
+                        <button type="button" class="btn-action" onclick="downloadPDF()">
+                            <i class="fas fa-download"></i>
+                            TÉLÉCHARGER
                         </button>
                         <button type="button" class="btn-action" onclick="printBooking()">
                             <i class="fas fa-print"></i>
                             IMPRIMER
-                        </button>
-                        <button type="button" class="btn-action" onclick="sendEmail()">
-                            <i class="fas fa-envelope"></i>
-                            EMAIL
                         </button>
                         <button type="button" class="btn-action" onclick="sendWhatsApp()">
                             <i class="fas fa-whatsapp"></i>
@@ -1133,10 +1530,19 @@ body {
         <p>Luxury Concierge Service</p>
     </footer>
 
+    <!-- PDF Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <button class="pdf-close-btn" onclick="closePDFModal()"><i class="fas fa-times"></i> Fermer</button>
+        <div class="pdf-content" id="pdfContent">
+            <!-- PDF content will be generated here -->
+        </div>
+    </div>
+
     <script>
 let currentStep = 1;
 let passengerCount = 2;
 let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+let lastBooking = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     setMinDate();
@@ -1262,7 +1668,7 @@ function updateSummary() {
         'nord': 'Gare du Nord',
         'lyon': 'Gare de Lyon',
         'disneyland': 'Disneyland Paris',
-        'defense': 'La Défense'
+        'beauvais': 'Beauvais'
     };
     document.getElementById('summaryDestination').textContent = destinationMap[destination] || '-';
 
@@ -1296,6 +1702,7 @@ function saveBooking() {
     };
 
     bookings.push(booking);
+    lastBooking = booking;
     localStorage.setItem('bookings', JSON.stringify(bookings));
     return booking;
 }
@@ -1339,7 +1746,7 @@ function loadBookings() {
             'nord': 'Gare du Nord',
             'lyon': 'Gare de Lyon',
             'disneyland': 'Disneyland Paris',
-            'defense': 'La Défense'
+            'beauvais': 'Beauvais'
         };
 
         card.innerHTML = `
@@ -1361,33 +1768,175 @@ function loadBookings() {
     });
 }
 
-function scrollToBooking() {
-    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+function generatePDFHTML(booking) {
+    const destinationMap = {
+        'cdg': 'Charles de Gaulle Airport',
+        'orly': 'Orly Airport',
+        'nord': 'Gare du Nord',
+        'lyon': 'Gare de Lyon',
+        'disneyland': 'Disneyland Paris',
+        'beauvais': 'Beauvais'
+    };
+
+    return `
+        <div class="pdf-header">
+            <h1>CITADINES</h1>
+            <p>APART'HOTEL PARIS</p>
+            <p>TAXI BOOKING REQUEST</p>
+            <p>Luxury Concierge Service</p>
+        </div>
+
+        <div class="pdf-section">
+            <h2>BOOKING DETAILS</h2>
+            <div class="pdf-row">
+                <span class="pdf-label">Booking ID:</span>
+                <span class="pdf-value">#${booking.id}</span>
+            </div>
+            <div class="pdf-row">
+                <span class="pdf-label">Date Created:</span>
+                <span class="pdf-value">${booking.timestamp}</span>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <h2>GUEST INFORMATION</h2>
+            <div class="pdf-row">
+                <span class="pdf-label">Apartment Number:</span>
+                <span class="pdf-value">${booking.apartment}</span>
+            </div>
+            <div class="pdf-row">
+                <span class="pdf-label">Guest Name:</span>
+                <span class="pdf-value">${booking.guestName || 'Not specified'}</span>
+            </div>
+            <div class="pdf-row">
+                <span class="pdf-label">Number of Passengers:</span>
+                <span class="pdf-value">${booking.passengers}</span>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <h2>JOURNEY DETAILS</h2>
+            <div class="pdf-row">
+                <span class="pdf-label">Destination:</span>
+                <span class="pdf-value">${destinationMap[booking.destination] || booking.destination}</span>
+            </div>
+            <div class="pdf-row">
+                <span class="pdf-label">Departure Date:</span>
+                <span class="pdf-value">${new Date(booking.date).toLocaleDateString('fr-FR')}</span>
+            </div>
+            <div class="pdf-row">
+                <span class="pdf-label">Departure Time:</span>
+                <span class="pdf-value">${booking.hour}:${booking.minute}</span>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <h2>SPECIAL INSTRUCTIONS</h2>
+            <div class="pdf-row">
+                <span class="pdf-label">Reception Notes:</span>
+                <span class="pdf-value">${booking.notes || 'None'}</span>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <h2>CONFIRMATION</h2>
+            <div class="pdf-row">
+                <span class="pdf-label">Handled by Receptionist:</span>
+                <span class="pdf-value">${booking.receptionist || 'Not specified'}</span>
+            </div>
+            <div class="pdf-row">
+                <span class="pdf-label">Driver Confirmed:</span>
+                <span class="pdf-value">${booking.driverConfirmed ? 'YES ✓' : 'NO'}</span>
+            </div>
+        </div>
+
+        <div class="pdf-footer">
+            <p>This is an official Citadines Taxi Booking confirmation.</p>
+            <p>Please keep this document for your records.</p>
+            <p>&copy; 2024 Citadines Taxi Booking. All rights reserved.</p>
+        </div>
+    `;
 }
 
-function generatePDF() {
-    const booking = saveBooking();
-    loadBookings();
-    alert('📄 PDF généré avec succès!\n\nRéservation #' + booking.id);
+function viewPDF() {
+    if (!lastBooking) {
+        alert('Aucune réservation à afficher');
+        return;
+    }
+
+    const pdfContent = document.getElementById('pdfContent');
+    pdfContent.innerHTML = generatePDFHTML(lastBooking);
+    document.getElementById('pdfModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function downloadPDF() {
+    if (!lastBooking) {
+        alert('Aucune réservation à télécharger');
+        return;
+    }
+
+    const element = document.createElement('div');
+    element.innerHTML = generatePDFHTML(lastBooking);
+    
+    const opt = {
+        margin: 10,
+        filename: `Citadines_Booking_${lastBooking.id}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+}
+
+function closePDFModal() {
+    document.getElementById('pdfModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
 }
 
 function printBooking() {
-    const booking = saveBooking();
+    if (!lastBooking) {
+        alert('Aucune réservation à imprimer');
+        return;
+    }
+
+    saveBooking();
     loadBookings();
     window.print();
-}
-
-function sendEmail() {
-    const booking = saveBooking();
-    loadBookings();
-    alert('✉️ Email envoyé avec succès!');
 }
 
 function sendWhatsApp() {
     const booking = saveBooking();
     loadBookings();
-    const message = encodeURIComponent(`Réservation Citadines Taxi\nAppartement: ${booking.apartment}\nDestination: ${booking.destination}\nDate: ${booking.date}\nHeure: ${booking.hour}:${booking.minute}`);
+    
+    const destinationMap = {
+        'cdg': 'Charles de Gaulle Airport',
+        'orly': 'Orly Airport',
+        'nord': 'Gare du Nord',
+        'lyon': 'Gare de Lyon',
+        'disneyland': 'Disneyland Paris',
+        'beauvais': 'Beauvais'
+    };
+
+    const message = encodeURIComponent(
+        `CITADINES TAXI BOOKING CONFIRMATION\n\n` +
+        `📋 Booking ID: #${booking.id}\n` +
+        `👤 Guest Name: ${booking.guestName || 'Not specified'}\n` +
+        `🚪 Apartment: ${booking.apartment}\n` +
+        `👥 Passengers: ${booking.passengers}\n` +
+        `📍 Destination: ${destinationMap[booking.destination] || booking.destination}\n` +
+        `📅 Date: ${new Date(booking.date).toLocaleDateString('fr-FR')}\n` +
+        `⏰ Time: ${booking.hour}:${booking.minute}\n` +
+        `👔 Receptionist: ${booking.receptionist || 'Not specified'}\n\n` +
+        `Luxury Concierge Service - Citadines`
+    );
+    
     window.open(`https://wa.me/?text=${message}`, '_blank');
+}
+
+function scrollToBooking() {
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
 }
 
 function newBooking() {
@@ -1405,6 +1954,14 @@ function newBooking() {
     updateStepsIndicator();
     scrollToBooking();
 }
+
+// Close PDF modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('pdfModal');
+    if (event.target === modal) {
+        closePDFModal();
+    }
+});
     </script>
 </body>
 </html>
